@@ -256,6 +256,23 @@ Move中的`assert`语句：`assert!(<predicate>, <abort_code>);`如果`<predicat
 abort 42
 ```
 
+### 2024.09.14
+**学习内容**：深入学习Object的概念 <br>
+**学习记录**：<br>
 abort 表达式停止当前函数的执行，并恢复当前事务对全局状态所做的所有更改。
+
+在创建object时，将接收到`ConstructorRef`，你可以使用它其生成另外的`Ref`s 
+
+使用`ConstructorRef`和`object::generate_signer`可以生成一个signer，signer允许你在Object上传输resource。
+
+在后面，`Ref`s被使用于 enable / disable / execute 某些Object函数，比如传输资源、传输对象它自己、删除对象 等等....
+
+`Ref`s常用点和启用的功能：https://aptos.dev/en/build/smart-contracts/objects/creating-objects
+
+> Refs必须在Object的创建时刻生成。一旦创建对象的事务完成，用于生成其它Refs的ConstructorRef就会过期。
+
+`ExtendRef`:可以让Object变得可编辑。`object::generate_extend_ref`
+
+`TransferRef`：决定Object是否可传输。`object::generate_transfer_ref`
 
 <!-- Content_END -->

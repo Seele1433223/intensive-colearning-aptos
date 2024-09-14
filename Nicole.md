@@ -76,7 +76,23 @@ timezone: Asia/Shanghai
     Reward = staked_amount * rewards_rate per epoch * (Number of successful proposals by the validator / Total number of proposals made by the validator) 
 ```
 ### 2024.09.13
+- 边学边忘🤦，简单复习了一下最初的直播内容
+- 下周多抽时间来研究
 
 ### 2024.09.14
+
+### 2024.09.15
+
+### 2024.09.16
+
+### 2024.09.17
+
+### 2024.09.18
+
+### 2024.09.19
+
+### 2024.09.20
+
+### 2024.09.21
 
 <!-- Content_END -->

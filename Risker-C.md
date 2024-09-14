@@ -64,9 +64,11 @@ timezone: Asia/Shanghai
 
 ### 2024.09.13
 
-
+1. 学习Modules 和 Scripts的区别：Modules用于定义函数，Scripts用于调用Modules中的函数
+2. 学习基础变量知识
 ### 2024.09.14
 
+1. 学习地址类型、向量、作用域等概念
 
 ### 2024.09.15
 

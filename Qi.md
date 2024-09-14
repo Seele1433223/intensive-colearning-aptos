@@ -47,4 +47,16 @@ https://github.com/Gkok-king/hello_aptos_back/blob/master/study/move.md
 又新学了一点基础语法：函数和范型
 https://github.com/Gkok-king/hello_aptos_back/blob/master/study/move.md
 
+### 2024.09.13
+
+又新学了一点基础语法 Struct Methods
+https://github.com/Gkok-king/hello_aptos_back/blob/master/study/move.md
+
+add new grammar learning and try to know Aptos Stdlib
+
+### 2024.09.14
+
+基础语法过完了，尝试了解 Aptos 的标准库
+https://github.com/Gkok-king/hello_aptos_back/blob/master/study/move.md
+
 <!-- Content_END -->

@@ -263,4 +263,71 @@ Authenticator在執行交易的簽名過程中，會給Aptos區塊鏈櫂限來�
 * Signed transaction
 * Multisignature transactions
 
+
+### 2024.09.14
+建立一個已簽名的交易，以下是整個流程:
+* 第一步: Creating a RawTransaction
+這例子是假設交易具有腳本函數的負載。
+```
+interface AccountAddress {
+  // 32-byte array
+  address: Uint8Array;
+}
+
+interface ModuleId {
+  address: AccountAddress;
+  name: string;
+}
+
+interface ScriptFunction {
+  module: ModuleId;
+  function: string;
+  ty_args: string[];
+  args: Uint8Array[];
+}
+
+interface RawTransaction {
+  sender: AccountAddress;
+  sequence_number: number;
+  payload: ScriptFunction;
+  max_gas_amount: number;
+  gas_unit_price: number;
+  expiration_timestamp_secs: number;
+  chain_id: number;
+}
+
+function createRawTransaction(): RawTransaction {
+  const payload: ScriptFunction = {
+    module: {
+      address: hexToAccountAddress("0x01"),
+      name: "AptosCoin",
+    },
+    function: "transfer",
+    ty_args: [],
+    args: [
+      BCS.serialize(hexToAccountAddress("0x02")), // receipient of the transfer
+      BCS.serialize_uint64(2), // amount to transfer
+    ],
+  };
+
+  return {
+    sender: hexToAccountAddress("0x01"),
+    sequence_number: 1n,
+    max_gas_amount: 2000n,
+    gas_unit_price: 1n,
+    // Unix timestamp, in seconds + 10 minutes
+    expiration_timestamp_secs: Math.floor(Date.now() / 1000) + 600,
+    payload: payload,
+    chain_id: 3,
+  };
+}
+```
+
+* 第二步: Creating a RawTransaction
+步驟 2. 建立簽名訊息及進行簽名
+1. 利用字串 APTOS::RawTransaction 的 SHA3_256 雜湊位元組產生前綴 (prefix_bytes)。
+2. BCS 序列化 RawTransaction 的位元組。
+3. 連接前綴和 BCS 位元組。
+4. 使用用戶私鑰對位元組進行簽署。
+
 <!-- Content_END -->
