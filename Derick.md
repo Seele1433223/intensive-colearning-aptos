@@ -51,11 +51,44 @@ Aptos采用了一种改进的BFT(拜占庭容错)共识机制,称为AptosBFT或D
 ### 2024.09.09
  -  [ ] 学习[Move Tutorial](https://github.com/aptos-labs/aptos-core/tree/main/aptos-move/move-examples/move-tutorial) 前三章
 ### 2024.09.10
- -  [ ] 
+```
+module 0xCAFE::basic_coin {
+    struct Coin has key {
+        value: u64,
+    }
+
+    public entry fun mint(account: &signer, value: u64) {
+        move_to(account, Coin { value })
+    }
+}
+```
+- 创建一个move合约，定义了一个名为 basic_coin 的模块，属于地址 0xCAFE。在 Move 中，模块是代码的基本组织单位。
+- 名为 Coin 的结构体。它有一个 key 能力，意味着它可以作为全局存储中的顶级资源。结构体包含一个名为 value 的字段，类型为 u64（64位无符号整数）。
+- 定义了一个名为 mint 的公共入口函数。它有两个参数：account: &signer：代表交易发送者的签名者引用。 value: u64：要铸造的代币数量。函数体使用 move_to 操作将新创建的 Coin 资源移动到 account 的存储中。这effectively "铸造"了新的代币并将其分配给指定账户。
 ### 2024.09.11
- -  [ ] 
+```
+#[test(account = @0xC0FFEE)]
+fun test_mint_10(account: &signer) acquires Coin {
+    let addr = signer::address_of(account);
+    mint(account, 10);
+    assert!(borrow_global<Coin>(addr).value == 10, 0);
+}
+```
+- #[test(account = @0xC0FFEE)] 声明这是一个测试，并为测试提供一个地址为 0xC0FFEE 的签名者。
+acquires Coin 表示这个函数会访问 Coin 资源。
+测试逻辑：
+获取账户地址
+调用 mint 函数铸造 10 个代币
+使用 assert! 检查该地址下的 Coin 资源的 value 是否为 10
 ### 2024.09.12
- -  [ ] 
+```
+public fun mint(module_owner: &signer, mint_addr: address, amount: u64) acquires Balance { .. }
+这个函数用于铸造代币。只有模块所有者可以调用此函数。它需要访问 Balance 资源。
+public fun balance_of(owner: address): u64 acquires Balance { .. }
+这个函数用于查询指定地址的余额。它需要访问 Balance 资源。
+public fun transfer(from: &signer, to: address, amount: u64) acquires Balance { .. }
+这个函数用于转账。它需要访问 Balance 资源。
+```
 ### 2024.09.13
  -  [ ] 
 ### 2024.09.14

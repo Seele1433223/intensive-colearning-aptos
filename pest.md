@@ -58,4 +58,10 @@ timezone: Asia/Shanghai
 
 [笔记](https://jeffierw.notion.site/Aptos-103-d8cba910543b4cc9adf3acc837a403e1)
 
+### 2024.09.14
+
+* 学习了Aptos 单元测试；
+
+[笔记](https://jeffierw.notion.site/Aptos-103-d8cba910543b4cc9adf3acc837a403e1)
+
 <!-- Content_END -->
