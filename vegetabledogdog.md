@@ -41,5 +41,8 @@ convert object type:
 unburn object:
 
     object::unburn(owner, object);
+    
+### 2024.09.14
+学习move script: https://aptos.dev/en/build/smart-contracts/scripts/script-tutorial
 
 <!-- Content_END -->
