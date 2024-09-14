@@ -24,9 +24,9 @@ aptos move init --name <PROJECT_NAME>
 接下来想研究的方向：
 1. composable NFT ---> done
 2. sponsored transaction
-3. fractionalized NFT
+3. fractionalized NFT ---> done
 4. Move 2.0 Language Release ---> done
-5. move prover
+5. move prover ---> done
 6. Cryptography in Move
 
 ### 2024.09.10
@@ -136,6 +136,13 @@ Fractionalized NFT
 ```
 
 ### 2024.09.13
+The Move Prover supports formal specification and verification of Move code.
+My understanding as a format check?
+
+```
+aptos move prove
+```
+to use 
 
 ### 2024.09.14
 

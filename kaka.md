@@ -243,4 +243,19 @@ module my_addr::object_playground {
 
 https://aptos.dev/en/build/smart-contracts/book/abilities
 
+### 2024.09.13
+**学习内容**：学习assert和abort表达式 <br>
+**学习记录**：<br>
+Move中的`assert`语句：`assert!(<predicate>, <abort_code>);`如果`<predicate>`为false，以abort_code中止交易。
+
+`return`和`abort`是结束执行的两种控制流结构，一种用于当前函数，一种用于整个事务。
+
+`abort`是一个带有u64类型的**abort code**的表达式。eg：
+
+```
+abort 42
+```
+
+abort 表达式停止当前函数的执行，并恢复当前事务对全局状态所做的所有更改。
+
 <!-- Content_END -->
