@@ -201,4 +201,33 @@ Move语言与变量
 
 
 
+### 2024.09.12
+【通过代码实践，以下代码均放于代码仓库1-003】
+UINT/STRING/BOOL/ADDRESS四大类型
+
+定义用let
+不同类型之间不能直接进行加减乘除运算
+需要转化为相同类型：
+打印字符串注意使用字符串的库
+
+use std::string;
+
+做转译：
+use std ::string::{utf8,String};
+ 
+
+定义字符串
+报错写法：
+ let str:String = “hello world”
+正确写法：
+let str::String = utf8(b”hello world”);
+print(&str);
+ 
+
+地址定义方法：
+let addr:address = @0x2A; 
+ 
+
+
+
 <!-- Content_END -->
