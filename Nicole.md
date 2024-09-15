@@ -82,7 +82,22 @@ timezone: Asia/Shanghai
 ### 2024.09.14
 
 ### 2024.09.15
-
+1. 安装Aptos CLI
+2. Create package
+ - aptos move init
+   - aptos move init --name <PROJECT_NAME>
+ - Update Move.toml
+   - [package]
+name = "Examples"
+version = "0.0.0"
+ 
+[addresses]
+hello_blockchain = "_"
+ 
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
 ### 2024.09.16
 
 ### 2024.09.17
