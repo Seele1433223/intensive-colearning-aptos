@@ -355,4 +355,116 @@ address 0x42{
 
 }
 ```
+
+### 2024.09.13
+
+```move
+address 0x42{
+    module main{
+        use std::debug;
+        use std::signer;
+        #[test]
+        fun test_if(){
+            let x=6;
+            if(x==5){
+                debug::print(&x);
+            }else{
+                debug::print(&10);
+            }
+
+        }
+
+        #[test]
+        fun test_while(){
+            let x= 5;
+            while(x>0){
+                x=x-1;
+                if (x==3){
+                    // break;
+                    continue;
+                };
+                debug::print(&x);
+            }
+
+        }
+
+        #[test]
+        fun test_loop(){
+            let x=10;
+            loop{
+                x=x-1;
+                if(x<=5){
+
+                    break
+                };
+                debug::print(&x);
+            };
+        return
+        }
+
+    }
+}
+```
+
+### 2024.09.14
+
+friend 的用法
+
+```move
+ module MyPacke::main{
+        use std::debug;
+        friend MyPacke::m2;
+        friend MyPacke::m3;
+        public fun num():u64{
+            66
+        }
+
+        public(friend) fun num2():u64{
+            88
+        }
+
+    }
+
+module MyPacke::m2{
+
+    #[test]
+    fun main2(){
+        use std::debug;
+        use MyPacke::main::num;
+        let n=num();
+        debug::print(&n);
+    }
+
+    #[test]
+    fun test2(){
+        use std::debug;
+        use MyPacke::main::num2;
+        let n= num2();
+        debug::print(&n);
+    }
+
+
+}
+
+module MyPacke::m3{
+    use std::debug;
+    #[test]
+    fun main3(){
+        use std::debug;
+        use MyPacke::main::num;
+        let n=num();
+        debug::print(&n);
+
+    }
+    #[test]
+    fun test2(){
+        use std::debug;
+        use MyPacke::main::num2;
+        let n= num2();
+        debug::print(&n);
+    }
+
+
+}
+```
 <!-- Content_END -->

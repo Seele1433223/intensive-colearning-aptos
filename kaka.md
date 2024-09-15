@@ -229,4 +229,50 @@ module my_addr::object_playground {
 
   `0x1::object::create_sticky_object(owner_address: address)`
 
+### 2024.09.12
+**学习内容**：学习Aptos中struct和abilities的概念 <br>
+**学习记录**：<br>
+在Move中，Abilities是一项可以给**类型**注入某种**能力**。类型可以注入多个能力。
+
+有4种不同的能力：
+
+- `copy`：可以被复制；
+- `drop`：可以被弹出/丢弃 popped/dropped;
+- `store`：允许该类型的值存储在全局变量的struct中
+- `key`：允许类型作为全局存储操作的键（key）
+
+https://aptos.dev/en/build/smart-contracts/book/abilities
+
+### 2024.09.13
+**学习内容**：学习assert和abort表达式 <br>
+**学习记录**：<br>
+Move中的`assert`语句：`assert!(<predicate>, <abort_code>);`如果`<predicate>`为false，以abort_code中止交易。
+
+`return`和`abort`是结束执行的两种控制流结构，一种用于当前函数，一种用于整个事务。
+
+`abort`是一个带有u64类型的**abort code**的表达式。eg：
+
+```
+abort 42
+```
+
+### 2024.09.14
+**学习内容**：深入学习Object的概念 <br>
+**学习记录**：<br>
+abort 表达式停止当前函数的执行，并恢复当前事务对全局状态所做的所有更改。
+
+在创建object时，将接收到`ConstructorRef`，你可以使用它其生成另外的`Ref`s 
+
+使用`ConstructorRef`和`object::generate_signer`可以生成一个signer，signer允许你在Object上传输resource。
+
+在后面，`Ref`s被使用于 enable / disable / execute 某些Object函数，比如传输资源、传输对象它自己、删除对象 等等....
+
+`Ref`s常用点和启用的功能：https://aptos.dev/en/build/smart-contracts/objects/creating-objects
+
+> Refs必须在Object的创建时刻生成。一旦创建对象的事务完成，用于生成其它Refs的ConstructorRef就会过期。
+
+`ExtendRef`:可以让Object变得可编辑。`object::generate_extend_ref`
+
+`TransferRef`：决定Object是否可传输。`object::generate_transfer_ref`
+
 <!-- Content_END -->

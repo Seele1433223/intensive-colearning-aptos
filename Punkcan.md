@@ -305,7 +305,16 @@ https://playground.pontem.network/
 
 
 ### 2024.09.13
+
+哎，https://playground.pontem.network/ 版本有点老旧，编译不了
+只能回到VM上编写了
+
+不折腾这个问题了
+
 ### 2024.09.14
+练习合约的布署
+
+usdk的测试
 ### 2024.09.15
 ### 2024.09.16
 ### 2024.09.17

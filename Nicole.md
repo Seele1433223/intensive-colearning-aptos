@@ -63,9 +63,56 @@ timezone: Asia/Shanghai
 ### 2024.09.11
 
 ### 2024.09.12
-
+1. 区块：
+   - Aptos 是一个按交易版本控制的数据库。执行交易时，每笔交易的结果状态都会单独存储，从而允许更精细的数据访问。这与其他区块链不同，其他区块链只存储区块（一组交易）的结果状态。
+   - 区块仍然是 Aptos 的基本单位。交易被分批处理并在一个区块中一起执行。此外，存储中的证明处于区块级粒度。区块内的交易数量取决于网络活动和可配置的最大区块大小限制。
+2. 质押：任何人都可以参与 Aptos 共识过程，只要他们质押了足够的实用币，即将他们的实用币存入托管账户。为了鼓励验证者参与共识过程，每个验证者的投票权重与验证者的质押金额成正比。作为交换，验证者将按质押金额的比例获得奖励。因此，区块链的性能与验证者的利益（即奖励）保持一致。
+   - Owner
+   - Operator
+   - Voter
+4. Aptos 主网纪元设置为 7200 秒（两小时）。
+5. 奖励公式
+```text
+    Reward = staked_amount * rewards_rate per epoch * (Number of successful proposals by the validator / Total number of proposals made by the validator) 
+```
 ### 2024.09.13
+- 边学边忘🤦，简单复习了一下最初的直播内容
+- 下周多抽时间来研究
 
 ### 2024.09.14
+补充
+### 2024.09.15
+1. 安装Aptos CLI
+2. Create package
+ - aptos move init
+   - aptos move init --name <PROJECT_NAME>
+ - Update Move.toml
+```
+[package]
+name = "Examples"
+version = "0.0.0"
+ 
+[addresses]
+hello_blockchain = "_"
+ 
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
+```
+ - Add to sources directory
+   - https://github.com/aptos-labs/aptos-core/tree/afd3706c17bcccfb39a9d6059aecbfa648ed295d/aptos-move/move-examples
+
+### 2024.09.16
+
+### 2024.09.17
+
+### 2024.09.18
+
+### 2024.09.19
+
+### 2024.09.20
+
+### 2024.09.21
 
 <!-- Content_END -->

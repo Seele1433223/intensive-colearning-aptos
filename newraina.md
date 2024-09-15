@@ -85,5 +85,25 @@ aptos move test --dump
 aptos move test --coverage
 ```
 
+### 2024.09.12
+
+学习 Move Tutorial step 3 & 4
+
+- friend 语法
+  - script 不能调用 friend 函数
+-　数据存储模型
+  - 每一个地址下，一个类型只能有一个值，因为它的存储模型是 type 到 value 的 Map
+
+
+### 2024.09.14
+
+今天看了一个待办事项列表的代码示例。其中有一点比较特别：在创建待办事项时，并不需要传入待办事项列表的ID，而是传入了待办事项列表的索引。
+
+我猜这样做的原因是因为不容易拿到用户账号下所有的 to do list 的ID，因为To Do List合约可以部署到多个地址下。
+
+那只使用一个序号的情况下，如何才能得到真实的To Do List地址呢？
+
+在代码中，它使用了一个“create object address”方法，通过合约的部署地址和索引来获取一个确定的地址。这个地址会作为初始化以及后续使用的To Do List地址。
+
 
 <!-- Content_END -->

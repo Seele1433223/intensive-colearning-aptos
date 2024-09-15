@@ -54,6 +54,18 @@ aptos move compile
 ### 2024.09.11
 #### 阅读aptos move example源码
 ### 2024.09.12
+#### move 语言函数修饰符
+核心概念
+函数修饰符是用来赋予函数特殊能力的一组关键字。主要有以下几类
+
+- 可见性
+  - 无Public，私有函数，仅限 module 内部调用
+  - friend public，模块内部函数，同包模块之间可以调用
+  - Public，模块公开函数，所有模块都可以调用
+- 全局存储引用
+  - acquires，当需要使用 move_from，borrow_global，borrow_global_mut 访问地址下的资源的时候，需要使用 acquires 修饰符
+- 链下
+  - entry，修饰后，该方法可由链下脚本调用
 ### 2024.09.13
 ### 2024.09.14
 ### 2024.09.15

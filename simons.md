@@ -89,4 +89,16 @@ timezone: Pacific/Auckland # 新西兰标准时间 (UTC+12)
 
 学习 move-examples/[33~36]
 
+### 2024.09.13
+
+学习 move-examples/[37~39]
+
+### 2024.09.14
+
+学习 move-examples[all]
+
+### 2024.09.15
+
+添加 todo list 合约
+
 <!-- Content_END -->

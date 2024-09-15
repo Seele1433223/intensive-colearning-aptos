@@ -121,4 +121,17 @@ entry fun create_my_object(caller: &signer) {
 let caller_address = signer::address_of(caller);
 let constructor_ref = object::create_sticky_object(caller_address);
 
+### 2024.09.13
+通过object::generate_signer可以创建singer来允许你往object传递资源过去
+let caller_address = signer::address_of(caller);
+
+// Creates the object
+let constructor_ref = object::create_object(caller_address);
+
+// Retrieves a signer for the object
+let object_signer = object::generate_signer(&constructor_ref);
+
+// Moves the MyStruct resource into the object
+move_to(&object_signer, MyStruct { num: 0 });
+
 <!-- Content_END -->

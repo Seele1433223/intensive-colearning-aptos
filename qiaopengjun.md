@@ -559,15 +559,183 @@ fun test6() {
 
 ### 2024.09.13
 
-笔记内容
+函数操作流IF、WHILE、LOOP
+
+```rust
+module 0x42::Demo3 {
+    use std::debug;
+
+    #[test]
+    fun test_if() {
+        let x = 5;
+        let x2 = 10;
+        if (x == 5) {
+            debug::print(&x);
+        } else {
+            debug::print(&x2);
+        }
+    }
+
+    #[test]
+    fun test_while() {
+        let  x = 0;
+        while (x < 10) {
+            debug::print(&x);
+            x = x + 1;
+        }
+    }
+
+    #[test]
+    fun test_while2() {
+        let  x = 5;
+        while (x < 10) {
+            debug::print(&x);
+            x = x + 1;
+
+            if (x == 7) {
+                break;
+            }
+        }
+    }
+
+    #[test]
+    fun test_while3() {
+        let  x = 5;
+        while (x < 10) {
+            x = x + 1;
+            if (x == 7) {
+                continue;
+            };
+            debug::print(&x);
+        }
+    }
+
+    #[test]
+    fun test_loop() {
+        let x = 5;
+        loop {
+            x = x + 1;
+            if (x == 7) {
+                break;
+            };
+            debug::print(&x);
+        }
+    }
+
+    #[test]
+    fun test_loop2() {
+        let x = 5;
+        loop {
+            x = x + 1;
+            if (x == 7) {
+                continue;
+            };
+            if (x == 10) {
+                break;
+            };
+            debug::print(&x);
+        }
+    }
+}
+```
+
+模块的特性
+引用
+可以通过以下三种方式导入模块，用来更好的进行管理。注意命名不能重复。
+
+```rust
+use std::debut;
+use std::debug::print;
+use std::debug::{print as P, native_print, print};
+
+fun main() {
+  debug::print(&v);
+  print(&v);
+  P(&v);
+}
+```
+
+作用域
+可以在全局定义，也可以定义在函数内部，只在所在的作用域内有效。
+
+```rust
+fun main() {
+  use std::debug::print;
+  print(&v);
+}
+
+public(friend) 
+声明当前模块信任用模块，受信任模块可以调用当前模块中具有 public(friend) 的可见性函数
+
+public
+声明当前模块对外供其他接口调用的方法。
+
+entry
+声明可被链下调用的模块方法。
+
+模块的发布与交互
+发布流程
+1. 配置账户，并为其发送 gas
+  可以通过 aptos init 来初始化一个账户。
+2. 编译并测试模块
+  可以通过以下命令来编译
+  aptos move compile --named-addresses hello_blockchain=default
+3. 发布模块
+  aptos move publish --named-addresses hello_blockchain=default
+
+交互流程
+1. 区块链浏览器
+  https://explorer.aptoslabs.com/
+2. 终端
+  aptos move run --function-id 'default::message::set_message' --args 'string:hello, blockchain'
+
+3. SDK
+  https://aptos.dev/en/build/sdks
 
 ### 2024.09.14
 
-笔记内容
+认识 OBJECT
+什么是 Aptos object？
+1. 对象是单个地址的资源容器，用于储存资源
+2. 对象提供了一种集中式资源控制与所有权管理的方法
 
+创建并转移对象实例
+我们可以通过 aptos_framework 库下的 object 来实现对象的功能。
+```rust
+module my_addr::object_playground {
+  use std::signer;
+  use aptos_framework::object::{self, ObjectCore};
+
+  entry fun create_and_transfer(caller: &signer, destination: address) {
+    // Create object
+    let caller_address = signer::address_of(caller);
+    let constructor_ref = object::create_object(caller_address);
+
+    // Set up the object
+
+    // Transfer to destination
+    let object = object::object_from_constructor_ref<ObjectCore>(&constructor_ref);
+    object::transfer(caller, object, destination);
+  }
+}
+```
+
+两类对象
+可删除普通对象
+不可删除对象
+
+- 命名对象，通过固定的 signer 和特定的 seed 生成唯一地址的对象，1个地址只能生成1个
+- 粘性对象，通过 signer 生成的对象，1个地址可以生成多个
+  
 ### 2024.09.15
 
-笔记内容
+OBJECT 配置与使用
+object 有哪些配置？
+
+1. 扩展对象：将对象变成可动态配置的，可以往里面添置新的 Struct 资源
+2. 转移管理：可以开启或者禁用 object transfer 功能
+3. 受控转移：仅可使用一次转移功能
+4. 允许删除：允许删除对象
 
 ### 2024.09.16
 

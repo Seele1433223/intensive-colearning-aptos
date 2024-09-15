@@ -50,4 +50,24 @@ timezone: Asia/Shanghai
 
 [笔记](https://jeffierw.notion.site/Aptos-102-df0475d8a5e64dfaabd9bcd21950c019)
 
+### 2024.09.13
+
+* 学习了Aptos Explorer的查看和使用，查看和无UI运行Code;
+* 学习了Aptos Event的使用和在Explorer上查看；
+* 学习了Aptos Indexer的使用，更好的获取链上数据；
+
+[笔记](https://jeffierw.notion.site/Aptos-103-d8cba910543b4cc9adf3acc837a403e1)
+
+### 2024.09.14
+
+* 学习了Aptos 单元测试；
+
+[笔记](https://jeffierw.notion.site/Aptos-103-d8cba910543b4cc9adf3acc837a403e1)
+
+### 2024.09.15
+
+* 学习了Aptos Digital Asset的新NFT标准；
+
+[笔记](https://jeffierw.notion.site/Aptos-104-654435c155794ba69ea752f23ba5e73b)
+
 <!-- Content_END -->
