@@ -263,6 +263,89 @@ aptos account开头
 | `transfer`                        | 在账户之间转移 APT 代币                      |
 | `help`                            | 打印此消息或指定子命令的帮助信息             |
 ### 2024.09.15
+# Move（基于aptos和sui的合约编程）
+
+## 定义
+
+### 模块module
+
+数据结构struct type，和操作数据结构的函数function。
+
+模块只能发布published
+
+### 结构类型struct type
+
+定义了全局存储的策略。
+
+### 模块函数module function
+
+定义了更新存储的规则（其实就是操作数据结构）
+
+### 全局存储global storage
+
+地址层面的树状结构存储
+
+每个地址存储资源数据值resource data values和模块代码值module code values。
+
+每种资源只能保存唯一一份，不能重复。
+
+操作这个资源的模块可以多个，但是不能重名。
+
+
+
+# 脚本
+
+## 脚本定义
+
+类似于别的语言的main文件，是入口文件。
+
+通常是调用已经发布（published或理解为部署deployed）的模块
+
+对全局存储进行了更新
+
+脚本只能执行execute。
+
+注意这不是像ethers.js一样在链下调用，脚本是在链上执行的，像是一种链上调用，每次执行脚本只运行一次。
+
+使用场景：无需部署全部合约，去测试合约中部分功能。
+
+## 脚本语法结构
+
+```rust
+script {
+    <use>*
+    <constants>*
+    fun <identifier><[type parameters: constraint]*>([identifier: type]*) <function_body>
+}
+```
+
+1、声明：以use开头
+
+2、声明常量：
+
+3、声明函数：自定义函数名称，每个脚本只能有一个函数。可以有参数，不能有返回值。
+
+## 脚本语法示例
+
+```rust
+script {
+    // Import the debug module published at the named account address std.
+    use std::debug;
+ 
+    const ONE: u64 = 1;
+ 
+    fun main(x: u64) {
+        let sum = x + ONE;
+        debug::print(&sum)
+    }
+}
+```
+
+## 脚本的限制功能
+
+1、不能直接读写全局存储，而是通过调用已经发布的module的function来间接实现操作全局存储的。
+
+2、不能定义新的好友（模块之间的关系）friends、数据结构类型struct type。
 ### 2024.09.16
 ### 2024.09.17
 ### 2024.09.18
