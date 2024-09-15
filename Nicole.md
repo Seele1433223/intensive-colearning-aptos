@@ -87,7 +87,8 @@ timezone: Asia/Shanghai
  - aptos move init
    - aptos move init --name <PROJECT_NAME>
  - Update Move.toml
-   - [package]
+```
+[package]
 name = "Examples"
 version = "0.0.0"
  
@@ -98,6 +99,10 @@ hello_blockchain = "_"
 git = "https://github.com/aptos-labs/aptos-core.git"
 rev = "mainnet"
 subdir = "aptos-move/framework/aptos-framework"
+```
+ - Add to sources directory
+   - https://github.com/aptos-labs/aptos-core/tree/afd3706c17bcccfb39a9d6059aecbfa648ed295d/aptos-move/move-examples
+
 ### 2024.09.16
 
 ### 2024.09.17
