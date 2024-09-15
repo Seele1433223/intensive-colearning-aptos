@@ -80,7 +80,7 @@ timezone: Asia/Shanghai
 - 下周多抽时间来研究
 
 ### 2024.09.14
-
+补充
 ### 2024.09.15
 1. 安装Aptos CLI
 2. Create package
