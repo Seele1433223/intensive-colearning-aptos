@@ -64,4 +64,10 @@ timezone: Asia/Shanghai
 
 [笔记](https://jeffierw.notion.site/Aptos-103-d8cba910543b4cc9adf3acc837a403e1)
 
+### 2024.09.15
+
+* 学习了Aptos Digital Asset的新NFT标准；
+
+[笔记](https://jeffierw.notion.site/Aptos-104-654435c155794ba69ea752f23ba5e73b)
+
 <!-- Content_END -->

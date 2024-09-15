@@ -263,4 +263,117 @@ Authenticator在執行交易的簽名過程中，會給Aptos區塊鏈櫂限來�
 * Signed transaction
 * Multisignature transactions
 
+
+### 2024.09.14
+建立一個已簽名的交易，以下是整個流程:
+* 第一步: Creating a RawTransaction
+這例子是假設交易具有腳本函數的負載。
+```
+interface AccountAddress {
+  // 32-byte array
+  address: Uint8Array;
+}
+
+interface ModuleId {
+  address: AccountAddress;
+  name: string;
+}
+
+interface ScriptFunction {
+  module: ModuleId;
+  function: string;
+  ty_args: string[];
+  args: Uint8Array[];
+}
+
+interface RawTransaction {
+  sender: AccountAddress;
+  sequence_number: number;
+  payload: ScriptFunction;
+  max_gas_amount: number;
+  gas_unit_price: number;
+  expiration_timestamp_secs: number;
+  chain_id: number;
+}
+
+function createRawTransaction(): RawTransaction {
+  const payload: ScriptFunction = {
+    module: {
+      address: hexToAccountAddress("0x01"),
+      name: "AptosCoin",
+    },
+    function: "transfer",
+    ty_args: [],
+    args: [
+      BCS.serialize(hexToAccountAddress("0x02")), // receipient of the transfer
+      BCS.serialize_uint64(2), // amount to transfer
+    ],
+  };
+
+  return {
+    sender: hexToAccountAddress("0x01"),
+    sequence_number: 1n,
+    max_gas_amount: 2000n,
+    gas_unit_price: 1n,
+    // Unix timestamp, in seconds + 10 minutes
+    expiration_timestamp_secs: Math.floor(Date.now() / 1000) + 600,
+    payload: payload,
+    chain_id: 3,
+  };
+}
+```
+
+* 第二步: Creating a RawTransaction
+步驟 2. 建立簽名訊息及進行簽名
+1. 利用字串 APTOS::RawTransaction 的 SHA3_256 雜湊位元組產生前綴 (prefix_bytes)。
+2. BCS 序列化 RawTransaction 的位元組。
+3. 連接前綴和 BCS 位元組。
+4. 使用用戶私鑰對位元組進行簽署。
+
+
+### 2024.09.15
+* 交易的生命周期
+為了更深入了解 Aptos 交易的生命週期（從操作角度），會追蹤交易的整個過程。
+從提交到 Aptos fullnode，到提交到 Aptos 區塊鏈。
+接下來會將重點放在 Aptos 節點的邏輯元件，看看交易如何與這些元件互動。
+
+* 前設:
+1. Alice 和 Bob 是兩個用戶，每個人在 Aptos 區塊鏈上都有一個帳戶。
+2. Alice的帳戶有110個Aptos幣。
+3. Alice 正在向 Bob 發送 10 個 Aptos 幣。
+4. Alice帳戶目前的序號是5（這表示Alice帳戶已經發送了5筆交易）。
+5. 網路上共有 100 個驗證節點 — 由 V1 到 V100。
+6. Aptos 用戶端將 Alice 的交易提交到 Aptos fullnode上的 REST 服務。
+fullnode將此交易轉送給驗證器fullnode，驗證器fullnode將其轉送給驗證器 V1。
+7. 驗證者 V1 是本輪的提議者/領導者。
+
+* 客戶提交交易:
+Aptos 用戶端建立一個原始交易（稱為 T5），
+將 10 個 Aptos 幣從 Alice 的帳戶轉移到 Bob 的帳戶。 
+Aptos 用戶端使用 Alice 的私鑰對交易進行簽署。已簽署的交易T5包括以下：
+
+* 原始交易
+* Alice的公鑰
+* Alice的簽名
+
+原始交易包括以下欄位：
+1. 帳戶地址: Alice的帳戶地址
+2. Move模組: 包含 Alice 執行的操作的模組（或程式）。當中有：
+* Move字節碼的點對點交易腳本
+* 腳本輸入的清單（包含 Bob 的帳戶地址和 Aptos 幣的支付金額）。
+3. 最大Gas的數量: 
+Alice 願意為此交易支付的最大天然氣量。 Gas 是支付計算和儲存費用的一種方式。\
+Gas的單位是計算的抽象測量。
+4. Gas 價格: 
+Alice 願意為執行交易每單位 Gas 支付的金額（以 Aptos 幣為單位）。
+5. 到期時間: 
+交易的到期時間。
+6. 序號: 
+帳戶的序號（例子為 5）表示已從該帳戶在鏈上提交和落實的交易數量。
+在例子中，Alice 的帳戶已提交 5 筆交易，其中包括 T5。
+注意：序號為5的交易只有在帳號序號為5的情況下才能在鏈上提交。
+7. Chain ID: 
+區分 Aptos 網路部署的識別碼（以防止跨網路攻擊）。
+
+
 <!-- Content_END -->

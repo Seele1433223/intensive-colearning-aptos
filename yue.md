@@ -405,4 +405,66 @@ address 0x42{
     }
 }
 ```
+
+### 2024.09.14
+
+friend 的用法
+
+```move
+ module MyPacke::main{
+        use std::debug;
+        friend MyPacke::m2;
+        friend MyPacke::m3;
+        public fun num():u64{
+            66
+        }
+
+        public(friend) fun num2():u64{
+            88
+        }
+
+    }
+
+module MyPacke::m2{
+
+    #[test]
+    fun main2(){
+        use std::debug;
+        use MyPacke::main::num;
+        let n=num();
+        debug::print(&n);
+    }
+
+    #[test]
+    fun test2(){
+        use std::debug;
+        use MyPacke::main::num2;
+        let n= num2();
+        debug::print(&n);
+    }
+
+
+}
+
+module MyPacke::m3{
+    use std::debug;
+    #[test]
+    fun main3(){
+        use std::debug;
+        use MyPacke::main::num;
+        let n=num();
+        debug::print(&n);
+
+    }
+    #[test]
+    fun test2(){
+        use std::debug;
+        use MyPacke::main::num2;
+        let n= num2();
+        debug::print(&n);
+    }
+
+
+}
+```
 <!-- Content_END -->

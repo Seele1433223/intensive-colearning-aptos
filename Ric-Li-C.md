@@ -6,7 +6,7 @@ timezone: Asia/Shanghai
 
 1. 自我介绍
 
-Ric Li C, 家庭主夫，天天在家带 2 个女儿，自学了 Solidity，NextJS，TypeScript，前一段时间在 BSC 链上，发行了个人的半慈善性质的 NFT 项目：MAS Awareness (http://mas-awareness.top)。
+    Ric Li C, 家庭主夫，天天在家带 2 个女儿，自学了 Solidity，NextJS，TypeScript，前一段时间在 BSC 链上，发行了个人的半慈善性质的 NFT 项目：MAS Awareness (http://mas-awareness.top)。
 
 2. 你认为你会完成本次残酷学习吗？
 
@@ -65,5 +65,17 @@ IntelliJ IDEA Ultimate: Request for Open Source Development License
 IntelliJ IDEA Ultimate: Request for Open Source Development License has been declined;
 
 Write one more email to request license as last try;
+
+### 2024.09.14
+
+IntelliJ IDEA Ultimate: Request for Open Source Development License has been declined again;
+
+下载并安装 IntelliJ IDEA Community Edition;
+
+在 IntelliJ IDEA 内安装 Move on Aptos 插件;
+
+### 2024.09.15
+
+Post in aptos-developer-discussions forum, ask for error encountered in IntelliJ IDEA Community Edition;
 
 <!-- Content_END -->
