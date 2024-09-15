@@ -49,5 +49,7 @@ aptos move init --name cofirst
 修改账号体系和白名单体系。
 前端框架进行搭建。
 
+### 2024.09.15
+研究和调试用户列表等存储结构。
 
 <!-- Content_END -->
