@@ -74,4 +74,8 @@ IntelliJ IDEA Ultimate: Request for Open Source Development License has been dec
 
 在 IntelliJ IDEA 内安装 Move on Aptos 插件;
 
+### 2024.09.15
+
+Post in aptos-developer-discussions forum, ask for error encountered in IntelliJ IDEA Community Edition;
+
 <!-- Content_END -->
