@@ -49,4 +49,8 @@ timezone: Asia/Shanghai
 1. 了解aptos的基础架构以及跟其他合约语言一些区别
 2. 学习TS语法,为后续合约开发调用做准备
 
+### 2024.09.15
+1. 学习move的table容器+对象object的使用
+2. 看todo-list的demo代码,熟悉move语言的使用以及通用模块std的几个模块使用: bcs, signer, vector
+
 <!-- Content_END -->
