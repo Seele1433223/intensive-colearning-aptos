@@ -692,4 +692,106 @@ module mynft::mynft{
 
 ```
 
+### 2024.09.16
+
+prove 的用法
+
+```move
+module 0x1::prove_demo {
+
+    use std::signer;
+    use aptos_framework::aptos_coin::AptosCoin;
+    use aptos_framework::coin;
+    #[test_only]
+    use std::string;
+    #[test_only]
+    use std::string::utf8;
+    #[test_only]
+    use aptos_std::debug;
+    #[test_only]
+    use aptos_framework::account::create_account_for_test;
+    #[test_only]
+    use aptos_framework::system_addresses;
+    #[test_only]
+    use aptos_framework::timestamp;
+
+    ///Error Code /////
+    const To_address_cant_same_with_caller : u64 = 1 ;
+    const Amount_must_large_than_zero :u64 = 2 ;
+    ///Error Code /////
+
+
+    spec coin_transfer_to_other( caller:&signer, to_address:address, amount:u64 ) {
+        pragma verify = true;
+
+        let addr = signer::address_of(caller);
+
+        ensures  amount > 0 ;
+        ensures  addr != to_address;
+
+    }
+
+    public entry fun coin_transfer_to_other (caller:&signer, to_address:address, amount:u64){
+        assert!(signer::address_of(caller) != to_address , To_address_cant_same_with_caller);
+        assert!(amount >  0 , Amount_must_large_than_zero);
+
+        coin::transfer<AptosCoin>(caller,to_address,amount);
+
+    }
+
+    /////// Unit  Test  /////////
+
+    #[test(aptos_framework=@aptos_framework,caller=@0x2,to_address_signer=@0x3)]
+    fun test_coin_transfer(aptos_framework:&signer,caller:&signer,to_address_signer:&signer){
+        create_account_for_test(signer::address_of(caller));
+        create_account_for_test(signer::address_of(to_address_signer));
+
+        prepare_for_apt(aptos_framework,caller);
+        coin::register<AptosCoin>(to_address_signer);
+
+        // 0  transfer
+        //coin_transfer_to_other(caller,signer::address_of(to_address_signer),0);
+
+        // self transfer
+        //coin_transfer_to_other(caller,signer::address_of(caller),1);
+
+        // transfer 1 APT
+        coin_transfer_to_other(caller,signer::address_of(to_address_signer),100000000);
+
+        test_print(caller,to_address_signer);
+    }
+
+    #[test_only]
+    fun test_print(caller:&signer,to_address:&signer){
+        debug::print(&utf8(b"balance of AptosCoin   -  dapp"));
+        debug::print(&coin::balance<AptosCoin>(signer::address_of(caller)));
+        debug::print(&utf8(b"balance of AptosCoin   -  to address"));
+        debug::print(&coin::balance<AptosCoin>(signer::address_of(to_address)));
+    }
+
+
+
+
+    #[test_only]
+    fun prepare_for_apt(aptos_framework:&signer,caller:&signer){
+        timestamp::set_time_has_started_for_testing(aptos_framework);
+        let (burn_cap, freeze_cap, mint_cap) = coin::initialize<AptosCoin>(
+            aptos_framework,
+            string::utf8(b"TC"),
+            string::utf8(b"TC"),
+            8,
+            false,
+        );
+        coin::register<AptosCoin>(caller);
+        let coins = coin::mint<AptosCoin>(200000000, &mint_cap);
+        coin::deposit(signer::address_of(caller), coins);
+        coin::destroy_freeze_cap(freeze_cap);
+        coin::destroy_burn_cap(burn_cap);
+        system_addresses::assert_aptos_framework(aptos_framework);
+        coin::destroy_mint_cap(mint_cap);
+    }
+}
+
+```
+
 <!-- Content_END -->
