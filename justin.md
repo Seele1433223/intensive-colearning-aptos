@@ -135,6 +135,12 @@ let object_signer = object::generate_signer(&constructor_ref);
 move_to(&object_signer, MyStruct { num: 0 });
 
 ### 2024.09.16
-编写move测试代码
+扩展性 ExtendRef
+ContructorRef 只有创建object的时候存在，后面就销毁了
+ExtendRef可以作为资源发给object储存下来，后面可以继续拿出来对object进行新的操作
+
+// 往object传入一个extend_ref资源
+let extend_ref = object::generate_extend_ref(&constructor_ref);
+move_to(&object_signer, ObjectController { extend_ref });
 
 <!-- Content_END -->
