@@ -52,7 +52,7 @@ timezone: Asia/Shanghai
 
 ### 2024.09.16
 
-笔记内容
+学习并模仿create-aptos-dapp生成的模板工程前端代码。
 
 ### 2024.09.17
 
