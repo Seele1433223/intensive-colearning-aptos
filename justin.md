@@ -134,4 +134,7 @@ let object_signer = object::generate_signer(&constructor_ref);
 // Moves the MyStruct resource into the object
 move_to(&object_signer, MyStruct { num: 0 });
 
+### 2024.09.16
+编写move测试代码
+
 <!-- Content_END -->
