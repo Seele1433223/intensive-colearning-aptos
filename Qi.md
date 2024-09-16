@@ -59,4 +59,9 @@ add new grammar learning and try to know Aptos Stdlib
 基础语法过完了，尝试了解 Aptos 的标准库
 https://github.com/Gkok-king/hello_aptos_back/blob/master/study/move.md
 
+### 2024.09.15
+
+了解 object model
+https://github.com/Gkok-king/hello_aptos_back/blob/master/study/move.md
+
 <!-- Content_END -->

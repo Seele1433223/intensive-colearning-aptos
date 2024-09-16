@@ -48,7 +48,7 @@ timezone: Asia/Shanghai
 
 ### 2024.09.15
 
-笔记内容
+[Aptos CLI 2](https://bityoume.github.io/intensive-colearning-aptos/aptos_cli.html#account---%E8%B4%A6%E6%88%B7%E7%9B%B8%E5%85%B3)
 
 ### 2024.09.16
 
