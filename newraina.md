@@ -105,5 +105,11 @@ aptos move test --coverage
 
 在代码中，它使用了一个“create object address”方法，通过合约的部署地址和索引来获取一个确定的地址。这个地址会作为初始化以及后续使用的To Do List地址。
 
+### 2024.09.16
+
+Object
+- 默认可以transfer
+- 使用transfer_ref可以禁用transfer
+- 使用LinearTransferRef可以实现一次性转移（灵魂绑定）
 
 <!-- Content_END -->
