@@ -347,6 +347,294 @@ script {
 
 2、不能定义新的好友（模块之间的关系）friends、数据结构类型struct type。
 ### 2024.09.16
+# 模块modules
+
+## 模块定义
+
+1、智能合约的逻辑单位
+
+2、其实就是各种函数、规则等代码。
+
+3、可以CRUD资源resources。
+
+4、提供接口对外操作。
+
+5、有权限控制
+
+6、可以复用。
+
+7、总结的说：定义数据结构struct type，和操作数据结构的函数function。
+
+8、模块只能发布published
+
+9、绑定一个地址
+
+## 模块语法结构
+
+```rust
+module <address>::<identifier> {
+    (<use> | <friend> | <type> | <function> | <constant>)*
+}
+```
+
+# 整数
+
+## 整数的类型
+
+1、整数都是无符号整数unsigned integer，其实就是非负整数。
+
+2、u开头，8，16，32，一直到256.
+
+3、如果不注明类型，那么就从上下文推断类型，如果推断不出来就默认u64。
+
+| Type   | Value Range    | 十进制范围 |
+| ------ | -------------- | ---------- |
+| `u8`   | 0 to 2^8- 1    | 255        |
+| `u16`  | 0 to 2^16 - 1  | 65535      |
+| `u32`  | 0 to 2^32 - 1  | 42亿       |
+| `u64`  | 0 to 2^64 - 1  | /          |
+| `u128` | 0 to 2^128 - 1 | /          |
+| `u256` | 0 to 2^256 - 1 | /          |
+
+### 不注明整数类型的类型推断方式
+
+1、函数名中函数类型
+
+```rust
+let a_u16 = 299;
+```
+
+### 类型转换
+
+语法：整数表达式 as 整数类型
+
+```rust
+x as u8;
+25u64 as u16;
+4/2 +12345 as y256;
+```
+
+## 整数的值
+
+1、数字序列（推荐）
+
+```rust
+let a: u64 = 2;
+```
+
+2、数字后带类型（声明变量时候不注明类型）
+
+```rust
+let b = 1u256;
+```
+
+3、数字的值除了是十进制的，也可以是十六进制的
+
+```rust
+let c: u8 = 0x1;
+```
+
+### 可以加分隔符的数字值（推荐）
+
+```rust
+let hex_u256: u256 = 0x1123_456A_BCDE_F;
+let simple_u64: u64 = 1_234_5678;
+```
+
+## 整数的运算
+
+### 算数运算
+
+前提：类型必须一致，比如都是u256
+
+```
++ - * / %
+```
+
+### 位运算
+
+#### 本位运算
+
+运算会自动换成二进制后进行位运算
+
+| 语法 | 解释 | 详述                         |
+| ---- | ---- | ---------------------------- |
+| `&`  | 与   | 对每个位进行布尔与运算       |
+| `|`  | 或   | 对每个位进行布尔或运算       |
+| `^`  | 异或 | 对每个位逐对执行布尔异或运算 |
+
+```rust
+module BitwiseExample {
+    public fun bitwise_operations() {
+        let a: u8 = 0b1100; // 二进制表示的 12
+        let b: u8 = 0b1010; // 二进制表示的 10
+
+        let and_result = a & b; // 0b1000 = 8
+        let or_result = a | b;  // 0b1110 = 14
+        let xor_result = a ^ b; // 0b0110 = 6
+
+        assert(and_result == 8, 1);
+        assert(or_result == 14, 2);
+        assert(xor_result == 6, 3);
+    }
+}
+
+```
+
+#### 移位运算
+
+左边是变量，右边是移的位数	
+
+| 语法 | 解释 | 限制条件                                 |
+| ---- | ---- | ---------------------------------------- |
+| `<<` | 左移 | 要移位的位数大于整数类型的大小，否则终止 |
+| `>>` | 右移 | 要移位的位数大于整数类型的大小，否则终止 |
+
+```rust
+module ShiftExample {
+    public fun shift_operations() {
+        let a: u8 = 0b0001_0000; // 二进制表示的 16
+
+        let left_shift_result = a << 2;  // 左移 2 位：0b0100_0000 = 64
+        let right_shift_result = a >> 2; // 右移 2 位：0b0000_0100 = 4
+
+        assert(left_shift_result == 64, 1);
+        assert(right_shift_result == 4, 2);
+    }
+}
+
+```
+
+### 比较运算
+
+```
+>  < <= >= == !=
+```
+
+# 布尔
+
+## 布尔值
+
+true false
+
+## 布尔表达式
+
+值为布尔值的表达式
+
+用于if、while、assert这三个场景。
+
+## 布尔运算
+
+ports three logical operations:
+
+| 语法 | 描述   | 相等操作               |
+| ---- | ------ | ---------------------- |
+| `&&` | 布尔与 | if (p) q else false    |
+| `||` | 布尔或 | if (p) true else q     |
+| `!`  | 布尔逆 | if (p) false else true |
+
+# 地址
+
+1、是全局存储global storage中用来表达账户所有权的类型。
+
+2、格式：256-bit，也叫做256比特，256位。同时也是32byte，也叫做32字节。地址的值是16进制，因此是64个十六进制字符。因为比特是二进制的，而字节是八进制的。
+
+## 地址的分类
+
+分为数值地址numerical address和命名地址named address
+
+### 数值地址
+
+其实就是地址以字面量形式来展示，比如
+
+```
+0xCAFE
+```
+
+### 命名地址
+
+1、用变量名来代表一个地址
+
+2、真实的赋值过程来自于Move.toml这个配置文件的addresses字段或者dev-addresses字段。注意这个赋值不来自于代码中。
+
+#### 示例
+
+配置文件Move.toml进行赋值
+
+```toml
+[addresses]
+MyAddress = "0x78ab28452bb4ea270fdaaf0459c9cca388011f9982496c441d3cad65f131e731"
+```
+
+代码中使用
+
+```rust
+module MyModule {
+    public fun use_named_address() {
+        let named_addr = @MyAddress;  // 使用命名地址
+    }
+}
+```
+
+## 地址在代码中使用（引用）
+
+### 非表达式的地址（直接使用）
+
+1、在非表达式的地址上，直接使用地址
+
+2、无论地址是数值地址还是命名地址
+
+3、非表达式的地址场景包括：模块声明、资源声明、引用命名地址，即use后、module后和resource后。
+
+```rust
+// 模块声明
+address 0xCAFE {         // 这里的地址是模块所属
+    module MyModule {
+    }
+}
+```
+
+```rust
+// 模块声明
+module OtherModule {
+    use MyAddress::MyModule;  // 这里 MyAddress 是命名地址
+}
+```
+
+```rust
+// 资源声明（这个代码可能错误）
+resource MyResource { ... }
+```
+
+### 表达式地址（前面加@）
+
+表达式中使用地址，前面加@
+
+这和solidity不同，solidity直接使用字面量地址或者变量地址，无论在哪都不加符号区别。
+
+move中无论地址是数值地址还是命名地址，只要在表达式中都加@
+
+表达式的地址场景包括：地址赋值给变量、地址作为参数调用函数、地址作为判断条件、地址参与其它表达式计算
+
+```rust
+// 地址赋值
+module MyModule {
+    public fun use_address() {
+        let addr = @0xCAFE;  // 这是一个数值地址表达式，@0xCAFE
+        let named_addr = @MyAddress; // 这是一个命名地址表达式，@MyAddress
+    }
+}
+```
+
+```
+my_function(@0x123);
+```
+
+```
+if (@0x789 == some_var) {...}
+```
+
+## 
 ### 2024.09.17
 ### 2024.09.18
 
