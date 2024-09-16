@@ -739,7 +739,31 @@ object 有哪些配置？
 
 ### 2024.09.16
 
-笔记内容
+DApp(Decentralized Application)
+
+- 与(Centralized) App 的差异
+  - 资产的所有权
+  - 运行在区块链上
+- 客户端 + 智能合约
+  - Web browser / iOS / Android
+  - Move Language Smart Contracts
+
+JavaScript / TypeScript
+
+- Javascript 基础
+  - <https://developer.mozilla.org/en-US/docs/Web/JavaScript>
+
+- Typescript 官网
+  <https://www.typescriptlang.org/docs/>
+  <https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html>
+- Typescript Playground
+  
+DApp 基本业务流程
+
+- 将 DAPP 与钱包相连接
+- 查看当前账号信息
+- 与合约交互
+- 获取合约内的数据
 
 ### 2024.09.17
 
