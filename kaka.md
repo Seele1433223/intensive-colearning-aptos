@@ -275,4 +275,45 @@ abort 表达式停止当前函数的执行，并恢复当前事务对全局状�
 
 `TransferRef`：决定Object是否可传输。`object::generate_transfer_ref`
 
+### 2024.09.15
+**学习内容**：学习abort，错误码的规范 <br>
+**学习记录**：<br>
+`abort`表达式停止当前函数的执行，并恢复当前交易对全局状态所做的所有更改。`abort`是一个带有u64类型的**abort code**的表达式。eg：`abort 42`
+
+Move中的`assert`语句：`assert!(<predicate>, <abort_code>);`如果`<predicate>`为false，以abort_code中止交易。本质上也是`abort`。
+
+规范的错误码：对错误码进行了规范，错误码使用u64最低的3个字节（高位的5个字节用于其它）。其中，3个字节中的最高字节代表**错误类别**，较低的两个字节代表**错误原因**。
+
+eg：`0x10003`，0x1为错误类别，0x3为错误原因
+
+`std::error`模块定义了一些错误类别：
+
+```
+const ALREADY_EXISTS: u64 = 8; //The resource that a client tried to create already exists (http: 409)
+const INVALID_ARGUMENT: u64 = 1; //Caller specified an invalid argument (http: 400)
+const NOT_FOUND: u64 = 6; //A specified resource is not found (http: 404)
+const PERMISSION_DENIED: u64 = 5; //client does not have sufficient permission (http: 403)
+......
+```
+
+在程序中，你仅需定义错误原因，如：
+
+```
+const ENOT_OWNER: u64 = 0x1;
+```
+
+然后使用`std::error`模块中的对应函数转换为规范错误码：
+
+```
+assert!(signer::address_of(owner) == @address, error::permission_denied(ENOT_OWNER));
+```
+
+当然，你也可以在定义时进行规范：
+
+```
+const ENOT_OWNER: u64 = 0x50001;
+```
+
+（思考：即使是非规范错误码也可以运行，那两者具体区别是什么呢？）
+
 <!-- Content_END -->
