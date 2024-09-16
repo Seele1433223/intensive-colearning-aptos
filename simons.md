@@ -101,4 +101,8 @@ timezone: Pacific/Auckland # 新西兰标准时间 (UTC+12)
 
 添加 todo list 合约
 
+### 2024.09.16
+
+学习 aptos connect
+
 <!-- Content_END -->
