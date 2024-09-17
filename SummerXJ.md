@@ -55,4 +55,7 @@ aptos move init --name cofirst
 ### 2024.09.16
 用户积分、列表、测试等几百结构和调用梳理。
 
+### 2024.09.17
+玩法设计
+
 <!-- Content_END -->
