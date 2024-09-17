@@ -70,4 +70,10 @@ timezone: Asia/Shanghai
 
 [笔记](https://jeffierw.notion.site/Aptos-104-654435c155794ba69ea752f23ba5e73b)
 
+### 2024.09.16
+
+* 学习了Aptos Fungible Assets的新FT标准；
+
+[笔记](https://jeffierw.notion.site/Aptos-104-654435c155794ba69ea752f23ba5e73b)
+
 <!-- Content_END -->
