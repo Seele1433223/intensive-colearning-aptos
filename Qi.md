@@ -64,4 +64,9 @@ https://github.com/Gkok-king/hello_aptos_back/blob/master/study/move.md
 了解 object model
 https://github.com/Gkok-king/hello_aptos_back/blob/master/study/move.md
 
+### 2024.09.16
+
+learn Aptos Fungible Asset (FA) Standard
+https://github.com/Gkok-king/hello_aptos_back/blob/master/study/FA.md
+
 <!-- Content_END -->
