@@ -53,4 +53,8 @@ timezone: Asia/Shanghai
 1. 学习move的table容器+对象object的使用
 2. 看todo-list的demo代码,熟悉move语言的使用以及通用模块std的几个模块使用: bcs, signer, vector
 
+### 2024.09.17
+1. 继续看todo-list的demo代码,通过看代码扩展看相关源码的使用方法,熟悉语法以及项目实际使用
+2. 参考todo-list代码开始自己写一遍
+
 <!-- Content_END -->
