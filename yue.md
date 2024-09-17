@@ -794,4 +794,112 @@ module 0x1::prove_demo {
 
 ```
 
+### 2024.09.17
+
+寫一個test 的用法
+
+```move
+module 0x1::test {
+
+    use std::signer;
+    use std::string::utf8;
+    use aptos_framework::coin;
+    use aptos_framework::coin::{destroy_burn_cap, destroy_freeze_cap, register, destroy_mint_cap};
+    #[test_only]
+    use aptos_std::debug;
+    #[test_only]
+    use aptos_framework::account::create_account_for_test;
+
+    //// Const /////
+
+    const Coin_name : vector<u8> = b"diffusion";
+    const Coin_symbol :vector<u8> = b"dfc";
+    const Coin_decimals :u8 = 8;
+
+    //// Const /////
+
+    struct Diffusion_coin has key {}
+
+    fun init_module (caller:&signer){
+        let (burn,freeze,mint) = coin::initialize<Diffusion_coin>(caller,utf8(Coin_name),utf8(Coin_symbol),Coin_decimals,false);
+        destroy_burn_cap(burn);
+        destroy_freeze_cap(freeze);
+        let coins = coin::mint<Diffusion_coin>(1000,&mint);
+        register<Diffusion_coin>(caller);
+        coin::deposit(signer::address_of(caller),coins);
+        destroy_mint_cap(mint);
+    }
+    public entry fun coin_transfer_to_other(caller:&signer,to_address:address){
+        coin::transfer<Diffusion_coin>(caller,to_address,100);
+    }
+
+
+    /////// Unit Test  /////////
+
+    // #[test(caller=@0x1,to_address=@0x2)]
+    //  fun test_coin_transfer_to_other(caller:&signer,to_address:&signer){
+    //     create_account_for_test(signer::address_of(caller));
+    //     create_account_for_test(signer::address_of(to_address));
+    //     init_module(caller);
+    //     register<Diffusion_coin>(to_address);
+    //     //test_print(caller,to_address);
+    //     coin_transfer_to_other(caller,signer::address_of(to_address));
+    //      test_print(caller,to_address);
+    //  }
+
+    #[test_only]
+    fun test_print(caller:&signer,to_address:&signer){
+        debug::print(&utf8(b"balance of diffusion coin   -  dapp"));
+        debug::print(&coin::balance<Diffusion_coin>(signer::address_of(caller)));
+        debug::print(&utf8(b"balance of diffusion coin   -  to address"));
+        debug::print(&coin::balance<Diffusion_coin>(signer::address_of(to_address)));
+    }
+
+
+}
+
+```
+
+```move
+module 0x1::demo {
+    use std::signer;
+    use std::string;
+    use std::string::utf8;
+    use aptos_std::debug;
+
+    struct Profile has key{
+        name:string::String,
+        icon:string::String
+    }
+
+    fun init_module(caller:&signer){
+        let new_Profile = Profile{
+            name:utf8(b"hello"),
+            icon:utf8(b"is me")
+        };
+        move_to(caller,new_Profile);
+    }
+
+    public entry fun read_profile (caller:&signer) acquires Profile {
+        let borrow_name = borrow_global<Profile>(signer::address_of(caller)).name;
+        let borrow_icon = borrow_global<Profile>(signer::address_of(caller)).icon;
+        debug::print(&utf8(b"name"));
+        debug::print(&borrow_name);
+        debug::print(&utf8(b"icon"));
+        debug::print(&borrow_icon);
+    }
+
+
+    /////// Unit Test  /////////
+
+    // #[test(caller=@0x1)]
+    // fun test_read_profile(caller:&signer) acquires Profile {
+    //     //init_module(caller);
+    //     read_profile(caller);
+    // }
+
+}
+
+```
+
 <!-- Content_END -->
