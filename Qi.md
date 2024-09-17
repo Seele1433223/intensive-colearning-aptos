@@ -69,4 +69,34 @@ https://github.com/Gkok-king/hello_aptos_back/blob/master/study/move.md
 learn Aptos Fungible Asset (FA) Standard
 https://github.com/Gkok-king/hello_aptos_back/blob/master/study/FA.md
 
+### 2024.09.17
+
+在使用这个教程
+https://aptos.dev/en/build/guides/first-coin
+走到了 step4
+
+=== Addresses ===
+Alice: 0x5912bc41804b4354f8d7a7bad39c4d8245cba456db33fada7728849938b14659
+Bob: 0x9d32e0ae58f405eff761b42e44a28daf9b265cefcd0c1cb2821a5dc22b34fac0
+
+=== Compiling MoonCoin package locally ===
+In order to run compilation, you must have the `aptos` CLI installed.
+Running the compilation locally, in a real situation you may want to compile this ahead of time.
+aptos move build-publish-payload --json-output-file move/moonCoin/moonCoin.json --package-dir move/moonCoin --named-addresses MoonCoin=0x5912bc41804b4354f8d7a7bad39c4d8245cba456db33fada7728849938b14659 --assume-yes
+Compiling, may take a little while to download git dependencies...
+UPDATING GIT DEPENDENCY https://github.com/aptos-labs/aptos-core.git
+INCLUDING DEPENDENCY AptosFramework
+INCLUDING DEPENDENCY AptosStdlib
+INCLUDING DEPENDENCY MoveStdlib
+BUILDING MoonCoin
+
+=== Publishing MoonCoin package to devnet network ===
+Publish package transaction hash: 0xf547b213fc08b8532b6db13ba590e41d9373ecee5419e88c328bdf453d30ec4b
+Bob's initial MoonCoin balance: 0.
+Alice mints herself 100 MoonCoin.
+Alice transfers 100 MoonCoin to Bob.
+Bob's updated MoonCoin balance: 100.
+
+明天继续尝试
+
 <!-- Content_END -->
