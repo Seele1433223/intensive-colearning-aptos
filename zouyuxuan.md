@@ -67,9 +67,52 @@ aptos move compile
 - 链下
   - entry，修饰后，该方法可由链下脚本调用
 ### 2024.09.13
+
 ### 2024.09.14
+认识 OBJECT
+什么是 Aptos object？
+1. 对象是单个地址的资源容器，用于储存资源
+2. 对象提供了一种集中式资源控制与所有权管理的方法
+
+创建并转移对象实例
+我们可以通过 aptos_framework 库下的 object 来实现对象的功能。
+```rust
+module my_addr::object_playground {
+  use std::signer;
+  use aptos_framework::object::{self, ObjectCore};
+
+  entry fun create_and_transfer(caller: &signer, destination: address) {
+    // Create object
+    let caller_address = signer::address_of(caller);
+    let constructor_ref = object::create_object(caller_address);
+
+    // Set up the object
+
+    // Transfer to destination
+    let object = object::object_from_constructor_ref<ObjectCore>(&constructor_ref);
+    object::transfer(caller, object, destination);
+  }
+}
+```
+
+两类对象
+可删除普通对象
+不可删除对象
+
+- 命名对象，通过固定的 signer 和特定的 seed 生成唯一地址的对象，1个地址只能生成1个
+- 粘性对象，通过 signer 生成的对象，1个地址可以生成多个
+  
 ### 2024.09.15
+OBJECT 配置与使用
+object 有哪些配置？
+
+1. 扩展对象：将对象变成可动态配置的，可以往里面添置新的 Struct 资源
+2. 转移管理：可以开启或者禁用 object transfer 功能
+3. 受控转移：仅可使用一次转移功能
+4. 允许删除：允许删除对象
 ### 2024.09.16
+学习aptos framework中关于事件，时间，transfer方法的使用
+
 ### 2024.09.17
 ### 2024.09.18
 <!-- Content_END -->

@@ -275,4 +275,90 @@ abort 表达式停止当前函数的执行，并恢复当前事务对全局状�
 
 `TransferRef`：决定Object是否可传输。`object::generate_transfer_ref`
 
+### 2024.09.15
+**学习内容**：学习abort，错误码的规范 <br>
+**学习记录**：<br>
+`abort`表达式停止当前函数的执行，并恢复当前交易对全局状态所做的所有更改。`abort`是一个带有u64类型的**abort code**的表达式。eg：`abort 42`
+
+Move中的`assert`语句：`assert!(<predicate>, <abort_code>);`如果`<predicate>`为false，以abort_code中止交易。本质上也是`abort`。
+
+规范的错误码：对错误码进行了规范，错误码使用u64最低的3个字节（高位的5个字节用于其它）。其中，3个字节中的最高字节代表**错误类别**，较低的两个字节代表**错误原因**。
+
+eg：`0x10003`，0x1为错误类别，0x3为错误原因
+
+`std::error`模块定义了一些错误类别：
+
+```
+const ALREADY_EXISTS: u64 = 8; //The resource that a client tried to create already exists (http: 409)
+const INVALID_ARGUMENT: u64 = 1; //Caller specified an invalid argument (http: 400)
+const NOT_FOUND: u64 = 6; //A specified resource is not found (http: 404)
+const PERMISSION_DENIED: u64 = 5; //client does not have sufficient permission (http: 403)
+......
+```
+
+在程序中，你仅需定义错误原因，如：
+
+```
+const ENOT_OWNER: u64 = 0x1;
+```
+
+然后使用`std::error`模块中的对应函数转换为规范错误码：
+
+```
+assert!(signer::address_of(owner) == @address, error::permission_denied(ENOT_OWNER));
+```
+
+当然，你也可以在定义时进行规范：
+
+```
+const ENOT_OWNER: u64 = 0x50001;
+```
+
+（思考：即使是非规范错误码也可以运行，那两者具体区别是什么呢？）
+
+### 2024.09.17
+**学习内容**：学习创建FA标准的资产 <br>
+**学习记录**：<br>
+Aptos FA标准是`coin`模块的现代代替。
+
+创建FA标准资产的过程：
+
+```
+// 创建对象,比如
+let fa_obj_constructor_ref = &object::create_sticky_object(@address);
+// 
+primary_fungible_store::create_primary_store_enabled_fungible_asset(
+    fa_obj_constructor_ref,
+    max_supply,
+    name,
+    symbol,
+    decimals,
+    icon_uri,
+    project_uri
+);
+// 获取权限并存储，以便后续进行操作
+let mint_ref = fungible_asset::generate_mint_ref(fa_obj_constructor_ref);
+let burn_ref = fungible_asset::generate_burn_ref(fa_obj_constructor_ref);
+let transfer_ref = fungible_asset::generate_transfer_ref(fa_obj_constructor_ref);
+
+let fa_obj_signer = object::generate_signer(fa_obj_constructor_ref);
+move_to(&fa_obj_signer, FAController {
+    mint_ref,
+    burn_ref,
+    transfer_ref,
+});
+
+// FAController为：
+struct FAController has key {
+    mint_ref: fungible_asset::MintRef,
+    burn_ref: fungible_asset::BurnRef,
+    transfer_ref: fungible_asset::TransferRef
+}
+
+// 进行mint操作时：
+let config = borrow_global<FAController>(fa_obj_addr);
+primary_fungible_store::mint(&config.mint_ref, sender_addr, amount);
+```
+
+
 <!-- Content_END -->

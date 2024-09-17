@@ -78,4 +78,12 @@ IntelliJ IDEA Ultimate: Request for Open Source Development License has been dec
 
 Post in aptos-developer-discussions forum, ask for error encountered in IntelliJ IDEA Community Edition;
 
+### 2024.09.16
+
+Learn Ethereum to Aptos Workshop (https://learn.aptoslabs.com/en/tutorials/ethereum-to-aptos-guide/cheat-sheet?workshop=eth-to-aptos)
+
+### 2024.09.17
+
+Learn Ethereum to Aptos Workshop （Continued）
+
 <!-- Content_END -->

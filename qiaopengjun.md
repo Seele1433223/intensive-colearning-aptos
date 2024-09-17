@@ -739,11 +739,111 @@ object 有哪些配置？
 
 ### 2024.09.16
 
-笔记内容
+DApp(Decentralized Application)
+
+- 与(Centralized) App 的差异
+  - 资产的所有权
+  - 运行在区块链上
+- 客户端 + 智能合约
+  - Web browser / iOS / Android
+  - Move Language Smart Contracts
+
+JavaScript / TypeScript
+
+- Javascript 基础
+  - <https://developer.mozilla.org/en-US/docs/Web/JavaScript>
+
+- Typescript 官网
+  <https://www.typescriptlang.org/docs/>
+  <https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html>
+- Typescript Playground
+  
+DApp 基本业务流程
+
+- 将 DAPP 与钱包相连接
+- 查看当前账号信息
+- 与合约交互
+- 获取合约内的数据
 
 ### 2024.09.17
 
-笔记内容
+如何与 Aptos 链交互
+区块链是个数据库
+
+- CRUD
+- 数据提交：Transaction 提交
+- 数据查询：查询链上数据
+- 提交 Transaction 有几种方法？
+
+Transaction 提交
+
+- Aptos CLI
+  - aptos move run
+- 在浏览器直接提交
+  - <https://explorer.aptoslabs.com/>
+  - Mainnet/Testnet/Devnet 的区别？
+- 使用 SDK <https://aptos.dev/en/build/sdks>
+  - Rust
+  - Python
+  - TypeScript
+  - ...
+- Gas fee
+
+链上数据查询 - FullNode
+
+- 什么是 FullNode(FN)
+  - 提供 Restful API
+  - <https://fullnode.devnet.aptoslabs.com/v1/spec#/>
+  - <https://fullnode.testnet.aptoslabs.com/v1/spec#/>
+- view Function
+  - 什么是 view Function
+  - CLI + SDK
+  - 浏览器
+- 链上数据查询 - Indexer
+  - 什么是 Indexer
+  - 为什么需要 Indexer
+    - 区块链是一个 日志型数据库
+    - 聚合和反查需求是非常常见的
+  - GraphQL
+
+链上数据查询 - GraphQL
+
+- 一种声明式的查询语言，对标 Restful
+- 来自 Facebook
+- 优点：
+  - 所取即所得，精准获取
+  - 具有类型系统，可以避免很多错误
+  - 解放前后端，前端可以自己定义查询，后端只需要提供接口
+- 缺点：
+  - 学习曲线陡峭
+  - 不直观，工具支持少
+  - 性能瓶颈
+  - 安全风险
+<https://aptos.dev/en/build/indexer/aptos-hosted>
+<https://aptos.dev/en/build/indexer/self-hosted>
+
+常见开发范式
+
+- 前端 - 合约
+- 前端 - 合约 - Indexer
+- 后端呢？
+最佳实践
+- 数据流定义先行
+- 幂等 实现很重要
+- 奥卡姆剃刀-慎重引入后端
+
+随机性
+
+1. 链上原生方法
+2. 链外引入
+3. 伪随机
+
+Mint 发售的要素
+
+1. 支付
+2. 铸造
+3. 开关(时间)
+4. 盲盒
 
 ### 2024.09.18
 

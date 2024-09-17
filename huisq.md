@@ -247,5 +247,14 @@ example();
 ```
 
 ### 2024.09.15
+Cryptography in Move
+
+Cryptographic hash functions in Move via the aptos_std::aptos_hash module:
+Keccak256
+SHA2-256
+SHA2-512
+SHA3-256
+SHA3-512
+RIPEMD160
 
 <!-- Content_END -->
