@@ -105,7 +105,7 @@ timezone: Pacific/Auckland # 新西兰标准时间 (UTC+12)
 
 学习 aptos connect
 
-### 2024.09.16
+### 2024.09.17
 
 类《无主之地：科学》前端开发
 
