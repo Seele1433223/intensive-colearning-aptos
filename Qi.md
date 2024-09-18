@@ -99,4 +99,8 @@ Bob's updated MoonCoin balance: 100.
 
 明天继续尝试
 
+### 2024.09.18
+
+尝试写自己的 FA 合约
+
 <!-- Content_END -->
