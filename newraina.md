@@ -112,4 +112,10 @@ Object
 - 使用transfer_ref可以禁用transfer
 - 使用LinearTransferRef可以实现一次性转移（灵魂绑定）
 
+### 2024.09.17
+
+Object
+- owner 关系可以嵌套，signer own object1, object1 own object2.
+- `object::owns` 可以跨层级检查 owner 关系: `object::owns(signer_address, object2)`
+
 <!-- Content_END -->

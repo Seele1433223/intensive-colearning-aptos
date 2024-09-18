@@ -153,9 +153,15 @@ timezone: Asia/Shanghai
   - FA 促成的证券和大宗商品的代币化引入了所有权的概念，使市场更加民主化，扩大了投资机会。除了传统资产外，FA的实用性还扩展到了代表房地产所有权，为传统流动性较弱的市场注入了新的血液。即使在游戏领域，虚拟货币和角色也可以进行代币化，使玩家能够拥有、交易，并为游戏开发者和玩家创造更多的创新收入的机会。
   - 除了其上述特性以外，可替代资产（FA）被定位为加密货币的超集，运用了比传统货币更广泛的范围。这种灵活性有望在替代 Move 中的 Coin 模块方面得到体现，展示了 FA 框架的全面性。
 
-### 2024.09.16
-
 ### 2024.09.17
+
+- 学习主题：继续理论，Move 语言了解，暂不 coding 👀
+  - 学习内容总结：Move 语言目录由五个部分组成
+    - [虚拟机](https://github.com/libra/libra/tree/master/language/vm) (VM), 它包含字节码格式、字节码解释器和执行交易块的基础设施。该目录还包含生成创世区块的基础设施
+    - [字节码验证器](https://github.com/libra/libra/tree/master/language/bytecode_verifier), 其中包含一个静态分析工具，用于拒绝无效的Move字节码。虚拟机在执行新的Move代码前，会先运行字节码验证器。编译器运行字节码验证器则会把输出和错误显示给程序员。
+    - Move 中间层表示 (IR： intermediate representation) [编译器](https://github.com/libra/libra/tree/master/language/stdlib), 它将可读的程序文本编译成Move字节码. *警告:IR编译器是一个测试工具。它会生成将被Move字节码验证器拒绝的无效字节码。IR语法工作仍在进行，或将经历重大的变化。*
+    - [标准库](https://github.com/libra/libra/tree/master/language/stdlib), 其中包含 `LibraAccount` 和 `LibraCoin` 等核心系统模块的Move IR代码。
+    - [一些测试](https://github.com/libra/libra/tree/master/language/functional_tests) ，用于虚拟机，字节码验证程序和编译器。 这些测试是用Move IR 编写的，由测试框架运行，该测试框架从注释中编码的特殊指令解析运行测试的预期结果。
 
 ### 2024.09.18
 

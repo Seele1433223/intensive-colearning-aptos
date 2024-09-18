@@ -82,4 +82,8 @@ Post in aptos-developer-discussions forum, ask for error encountered in IntelliJ
 
 Learn Ethereum to Aptos Workshop (https://learn.aptoslabs.com/en/tutorials/ethereum-to-aptos-guide/cheat-sheet?workshop=eth-to-aptos)
 
+### 2024.09.17
+
+Learn Ethereum to Aptos Workshop （Continued）
+
 <!-- Content_END -->

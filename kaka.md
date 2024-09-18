@@ -316,4 +316,49 @@ const ENOT_OWNER: u64 = 0x50001;
 
 （思考：即使是非规范错误码也可以运行，那两者具体区别是什么呢？）
 
+### 2024.09.17
+**学习内容**：学习创建FA标准的资产 <br>
+**学习记录**：<br>
+Aptos FA标准是`coin`模块的现代代替。
+
+创建FA标准资产的过程：
+
+```
+// 创建对象,比如
+let fa_obj_constructor_ref = &object::create_sticky_object(@address);
+// 
+primary_fungible_store::create_primary_store_enabled_fungible_asset(
+    fa_obj_constructor_ref,
+    max_supply,
+    name,
+    symbol,
+    decimals,
+    icon_uri,
+    project_uri
+);
+// 获取权限并存储，以便后续进行操作
+let mint_ref = fungible_asset::generate_mint_ref(fa_obj_constructor_ref);
+let burn_ref = fungible_asset::generate_burn_ref(fa_obj_constructor_ref);
+let transfer_ref = fungible_asset::generate_transfer_ref(fa_obj_constructor_ref);
+
+let fa_obj_signer = object::generate_signer(fa_obj_constructor_ref);
+move_to(&fa_obj_signer, FAController {
+    mint_ref,
+    burn_ref,
+    transfer_ref,
+});
+
+// FAController为：
+struct FAController has key {
+    mint_ref: fungible_asset::MintRef,
+    burn_ref: fungible_asset::BurnRef,
+    transfer_ref: fungible_asset::TransferRef
+}
+
+// 进行mint操作时：
+let config = borrow_global<FAController>(fa_obj_addr);
+primary_fungible_store::mint(&config.mint_ref, sender_addr, amount);
+```
+
+
 <!-- Content_END -->
