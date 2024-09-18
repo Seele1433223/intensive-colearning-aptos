@@ -58,5 +58,8 @@ aptos move init --name cofirst
 ### 2024.09.17
 玩法设计、用户列表、测试用例等。
 
+### 2024.09.18
+参加第三堂课 主题： 构建并部署 代币 faucet
+
 
 <!-- Content_END -->
