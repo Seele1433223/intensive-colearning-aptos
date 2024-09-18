@@ -106,6 +106,7 @@ subdir = "aptos-move/framework/aptos-framework"
 ### 2024.09.16
 
 ### 2024.09.17
+中秋节快乐！
 
 ### 2024.09.18
 参加会议：构建并部署代币水龙头
