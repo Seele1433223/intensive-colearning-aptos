@@ -902,7 +902,7 @@ module 0x1::demo {
 
 ```
 
-### 2024.09.17
+### 2024.09.18
 
 寫個hackthon 要用到的move 函數，先寫view
 ```move
