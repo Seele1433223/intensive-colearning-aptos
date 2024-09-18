@@ -847,7 +847,18 @@ Mint 发售的要素
 
 ### 2024.09.18
 
-笔记内容
+object::ExtendRef
+理解为 object 的 signer
+把 object 理解为一个 account
+有 object signer 才能 move to 存储 struct
+extendRef 为了 signer 这个可以被合约管理，抽象出来一个 Ref ，可以用来获得 object signer
+ExtendRef 类型可以生成 对应内部 Object 地址的 Signer 类型的实例
+signer 只有 drop 能力，不能 store
+
+Creating an Object involves two steps:
+
+Creating the ObjectCore resource group (which has an address you can use to refer to the Object later).
+Customizing how the Object will behave using permissions called Refs.
 
 ### 2024.09.19
 

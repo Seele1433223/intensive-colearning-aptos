@@ -76,4 +76,10 @@ timezone: Asia/Shanghai
 
 [笔记](https://jeffierw.notion.site/Aptos-104-654435c155794ba69ea752f23ba5e73b)
 
+### 2024.09.17
+
+* 学习了Aptos Object Model的对象标准，创建对象，对象功能，扩展对象；
+
+[笔记](https://jeffierw.notion.site/Aptos-104-654435c155794ba69ea752f23ba5e73b)
+
 <!-- Content_END -->
