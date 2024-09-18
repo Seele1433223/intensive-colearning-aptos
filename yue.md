@@ -902,4 +902,172 @@ module 0x1::demo {
 
 ```
 
+### 2024.09.17
+
+寫個hackthon 要用到的move 函數，先寫view
+```move
+    ////////////////// view fun /////////////////////////////////
+    #[view]
+    public fun check_user_card(user_address:address,card_name:string::String,expired_date:u64):(bool,Bet_card) acquires Account_tree {
+        let have_or_not = false;
+        let i =0;
+        let index =99;
+        let length = vector::length(&borrow_global<Account_tree>(user_address).save_2);
+        while(i < length){
+            let borrow = vector::borrow(&borrow_global<Account_tree>(user_address).save_2,i);
+            if(borrow.expired_time == expired_date){
+                if(borrow.pair.pair_name == card_name){
+                    index =i;
+                    have_or_not=true;
+                }
+            };
+            i = i +1;
+        };
+        let null_bet = Bet_card{
+            account:@0x1,
+            which:99,
+            pair:Pair{
+                pair_type:utf8(b""),
+                pair_name:utf8(b""),
+                left_url:utf8(b""),
+                right_url:utf8(b""),
+                left:0,
+                left2:0,
+                middle:0,
+                middle2:0,
+                right:0,
+                right2:0,
+                can_bet:false,
+                expired_time:0
+            },
+            bet:0,
+            a_win:0,
+            b_win:0,
+            c_win:0,
+            time:0,
+            expired_time:0,
+        };
+        if(i != 99 ){
+            return (have_or_not,*vector::borrow(&borrow_global<Account_tree>(user_address).save_2,i))
+        }else{return (have_or_not,null_bet)}
+    }
+    #[view]
+    public fun check_user_badges(user_address:address,badges_name:string::String):(bool,Badges,vector<Badges>) acquires Diffusion_store_tree, Account_tree {
+        let borrow = borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list;
+        let i=0;
+        let length = vector::length(&borrow);
+        let right = false;
+        let index = 99;
+        while(i < length) {
+            let specfic = vector::borrow(&borrow, i);
+            if (specfic.save_Badges.Name == badges_name) {
+                let f = 0;
+                let length2 = vector::length(&specfic.save_list);
+                index = i;
+                while (f < length2) {
+                    let specfic_address = vector::borrow(&specfic.save_list, f);
+                    if (specfic_address == &user_address) {
+                        right = true;
+                    };
+                    f = f + 1;
+                };
+            };
+            i = i + 1;
+        };
+        if(index != 99){return (right,  vector::borrow(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_Badges,borrow_global<Account_tree>(user_address).save_4)}else{
+            let new_badges = Badges{ Name:utf8(b""),url:utf8(b"")};
+            return(false , new_badges,vector::empty<Badges>())
+        }
+
+    }
+    #[view]
+    public fun check_helper_list(helper_address:address):(bool,bool) acquires Diffusion_store_tree {
+        let borrow = borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list;
+        let i=0;
+        let length = vector::length(&borrow);
+        let right1=false;
+        let right2 = false;
+        while(i < length){
+            let specfic_helper = vector::borrow(&borrow,i);
+            if(specfic_helper.account == helper_address){
+                right1=true;
+                if(specfic_helper.pay_margin == true){
+                    right2=true
+                };
+            };
+
+            i=i+1;
+        };
+        return (right1,right2)
+    }
+    #[view]
+    public fun helper_upload_which_result(helper_address:address):Helper  acquires Diffusion_store_tree {
+
+        let i=0;
+        let length = vector::length(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list);
+        let index= 99;
+        while(i < length){
+            let specfic_helper = vector::borrow(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list,i);
+            if(specfic_helper.account == helper_address){
+                index = i ;
+            };
+            i=i+1;
+        };
+        if(index !=99){*vector::borrow(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list,index)}else{
+            let new_helper = Helper{
+                account:@0x1,
+                helper_contribute:vector::empty<Helper_upload_result>(),
+                helper_point:0,
+                upload_times:0,
+                wrong_times:0,
+                pay_margin:false,
+                need_admin:false,
+            };
+            return new_helper
+        }
+
+    }
+    #[view]
+    public fun get_pair_data(pair_name:string::String,expire_data:u64):(Pair,Chips,bool,bool) acquires Diffusion_store_tree {
+        let borrow = borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Pair_result_store.save_pair;
+        let i = 0 ;
+        let length = vector::length(&borrow);
+        let index= 99;
+        while(i < length ){
+            let specfic_pair = vector::borrow(&borrow,i);
+            if(specfic_pair.pair_name == pair_name){
+                    if(specfic_pair.expired_time == expire_data){
+                        index =i
+                    };
+                };
+            i=i+1;
+        };
+        if(index !=99){
+            return (*vector::borrow(&borrow,index),*vector::borrow(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Pair_result_store.save_chips,index),*vector::borrow( &borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Pair_result_store.save_admin_set_result,index),*vector::borrow( &borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Pair_result_store.save_can_claim,index))}
+        else{
+            let new_pair = Pair{
+                pair_type:utf8(b""),
+                pair_name:utf8(b""),
+                left:0,
+                left2:0,
+                middle:0,
+                middle2:0,
+                right:0,
+                right2:0,
+                left_url:utf8(b""),
+                right_url:utf8(b""),
+                expired_time:0,
+                can_bet:false
+            };
+            let new_chips = Chips{
+                left:0,
+                middle:0,
+                right:0,
+                given:0
+            };
+            return (new_pair,new_chips,false,false)
+        }
+
+    }
+```
 <!-- Content_END -->
