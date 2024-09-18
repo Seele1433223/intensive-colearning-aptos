@@ -143,4 +143,27 @@ ExtendRef可以作为资源发给object储存下来，后面可以继续拿出�
 let extend_ref = object::generate_extend_ref(&constructor_ref);
 move_to(&object_signer, ObjectController { extend_ref });
 
+### 2024.09.18
+aptos sdk学习
+async mintCoin(minter: AptosAccount, receiverAddress: HexString, amount: number | bigint): Promise<string> {
+    const rawTxn = await this.generateTransaction(minter.address(), {
+      function: "0x1::managed_coin::mint",
+      type_arguments: [`${minter.address()}::justin_coin::JustinCoin`],
+      arguments: [receiverAddress.hex(), amount],
+    }, customOpts);
+
+    await this.simulateTransaction(minter, rawTxn).then((sims) =>
+      sims.forEach((tx) => {
+        if (!tx.success) {
+          throw new Error(`Transaction failed: ${tx.vm_status}\n${JSON.stringify(tx, null, 2)}`);
+        }
+      }),
+    );
+
+    const bcsTxn = await this.signTransaction(minter, rawTxn);
+    const pendingTxn = await this.submitTransaction(bcsTxn);
+
+    return pendingTxn.hash;
+  }
+
 <!-- Content_END -->
