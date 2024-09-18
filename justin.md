@@ -143,4 +143,7 @@ ExtendRef可以作为资源发给object储存下来，后面可以继续拿出�
 let extend_ref = object::generate_extend_ref(&constructor_ref);
 move_to(&object_signer, ObjectController { extend_ref });
 
+### 2024.09.18
+aptos sdk学习
+
 <!-- Content_END -->
