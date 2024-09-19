@@ -86,4 +86,8 @@ Learn Ethereum to Aptos Workshop (https://learn.aptoslabs.com/en/tutorials/ether
 
 Learn Ethereum to Aptos Workshop （Continued）
 
+### 2024.09.18
+
+参加线上会议 ~ Aptos 残酷共学分享 3：构建并部署代币水龙头。
+
 <!-- Content_END -->

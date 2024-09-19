@@ -360,5 +360,30 @@ let config = borrow_global<FAController>(fa_obj_addr);
 primary_fungible_store::mint(&config.mint_ref, sender_addr, amount);
 ```
 
+### 2024.09.18
+**学习内容**：学习Script的概念，以及编译和执行 <br>
+**学习记录**：<br>
+脚本（Scripts）是类似于传统语言中的主函数的可执行入口点。脚本通常调用已发布模块的函数来执行全局存储的更新。脚本是临时代码片段，未在全局存储中发布。
+
+Scripts是在单个交易中运行多个public函数的一种方式。Script可以与合约一起编写，但强烈建议为其使用单独的Move包。
+
+- scripts中只能有一个函数
+- 参数只能为：[`u8`, `u16`, `u32`, `u64`, `u256`, `address`, `bool`, `signer`, `&signer`, `vector<u8>`]
+
+```
+aptos move compile
+```
+
+```
+aptos move compile-script  // 合约中只有一个script时
+```
+
+运行脚本：
+
+```
+aptos move run-script --compiled-script-path build/run_script/bytecode_scripts/main.mv --args address:b078d693856a65401d492f99ca0d6a29a0c5c0e371bc2521570a86e40d95f823 --args u64:5
+```
+
+
 
 <!-- Content_END -->

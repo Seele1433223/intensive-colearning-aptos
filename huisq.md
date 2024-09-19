@@ -257,4 +257,11 @@ SHA3-256
 SHA3-512
 RIPEMD160
 
+### 2024.09.19
+开始准备aptos collision（虽晚了点）
+需探讨：
+- randomness
+- ton mini app integration
+
+今天先完成合约再测试
 <!-- Content_END -->
