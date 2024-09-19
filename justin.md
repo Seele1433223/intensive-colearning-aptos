@@ -166,4 +166,18 @@ async mintCoin(minter: AptosAccount, receiverAddress: HexString, amount: number 
     return pendingTxn.hash;
   }
 
+### 2024.09.19
+async transferCoin(sender: AptosAccount, receiverAddress: HexString, amount: number | bigint): Promise<string> {
+    const rawTxn = await this.generateTransaction(sender.address(), {
+      function: "0x1::aptos_account::transfer_coins",
+      type_arguments: [`${sender.address()}::justin_coin::JustinCoin`],
+      arguments: [receiverAddress.hex(), amount],
+    });
+
+    const bcsTxn = await this.signTransaction(sender, rawTxn);
+    const pendingTxn = await this.submitTransaction(bcsTxn);
+
+    return pendingTxn.hash;
+  }
+  
 <!-- Content_END -->
