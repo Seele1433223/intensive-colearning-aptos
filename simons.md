@@ -113,4 +113,8 @@ timezone: Pacific/Auckland # 新西兰标准时间 (UTC+12)
 
 修复 score 中 计分的 bug
 
+### 2024.09.19
+
+score 中的计分逻辑测试仍然存在 bug
+
 <!-- Content_END -->

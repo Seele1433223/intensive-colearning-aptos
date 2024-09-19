@@ -144,4 +144,25 @@ FA 还支持自定义存取钩子函数，允许资产发行者实现自定义�
 
 FA 标准兼容 coin 模块，旧的 coin 模块将自动迁移至 FA，并为其创建相应的元数据。
 ### 2024.09.18
+#### event 事件
+在有drop和store的属性的结构体上面添加#[event]宏
+```
+#[event]
+struct TransferEvent has drop, store {
+    sender: address,
+    receiver: address,
+    amount: u64
+}
+```
+使用事件
+```
+# 导入事件
+use aptos_framework::event;
+
+# 调用事件
+event::emit(TransferEvent { sender: address,
+    receiver: address,
+    amount: 1}
+    );
+```
 <!-- Content_END -->

@@ -82,4 +82,10 @@ timezone: Asia/Shanghai
 
 [笔记](https://jeffierw.notion.site/Aptos-104-654435c155794ba69ea752f23ba5e73b)
 
+### 2024.09.18
+
+* 学习了[Aptos Example Todo List](https://learn.aptoslabs.com/en/code-examples/todo-list) 的合约例子;
+
+[Source Code](https://github.com/jeffierw/aptos_todolist)
+
 <!-- Content_END -->
