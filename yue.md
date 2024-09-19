@@ -1070,4 +1070,165 @@ module 0x1::demo {
 
     }
 ```
+
+### 2024.09.19
+
+```move  ////////////////// Helper fun /////////////////////////////////
+    public entry fun helper_upload_result(caller:&signer,pair_name1:string::String,which:u8,expired_time:u64) acquires Diffusion_store_tree, Account_tree {
+        // if(vector::length(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list) >= (Least_helper as u64)){
+        //     all_helper_result(caller);
+        // };
+        // all_helper_result(caller);
+        assert!(exists<Account_tree>(signer::address_of(caller)  )== true,Create_account_first);
+        assert!(exists<Diffusion_store_tree>(create_resource_address(&@dapp,Seed))== true,Not_exists_diffusion_store_tree);
+
+        too_much_wrong_is_time_to_click_it_out(caller);
+        asc3(caller);
+
+        let helper_index = check_helper_index(caller);
+        assert!(helper_index !=99,NOT_HELPER);
+        assert!(which==1||which==2||which==3,NOT_RIGHT_INPUT);
+
+
+        let pair_index = check_pair_index(caller,pair_name1,expired_time);
+        assert!(pair_index!=99,NOT_exist_pair);
+        assert!(vector::borrow(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Pair_result_store.save_pair,pair_index).can_bet == false , Still_Bet_time);
+        let helper_upload_result_index  = check_helper_upload_result_index(caller,pair_index,helper_index);
+
+        assert!(helper_upload_result_index==99,ALREADY_UPLOAD);
+
+        let admin_set =vector::borrow(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Pair_result_store.save_admin_set_result,pair_index) ;
+        let can_claim = vector::borrow(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Pair_result_store.save_can_claim,pair_index) ;
+
+        assert!(admin_set != &true && can_claim!=&true,Pair_finish);
+
+        let borrow_helper_list = borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed));
+        let specfic_helper = vector::borrow_mut(&mut borrow_helper_list.save_Helper_list.list,helper_index);
+
+        assert!(specfic_helper.pay_margin==true,Helper_not_pay_margin);
+
+       // let borrow_pair_reult = borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Pair_result_store;
+        let spedcfic_pair = vector::borrow(&borrow_helper_list.save_Pair_result_store.save_pair,pair_index);
+
+        let new_upload_result = Helper_upload_result{
+            pair:Pair{
+                pair_type:spedcfic_pair.pair_type,
+                pair_name:spedcfic_pair.pair_name,
+                left_url:spedcfic_pair.left_url,
+                right_url:spedcfic_pair.right_url,
+                left:spedcfic_pair.left,
+                left2:spedcfic_pair.left2,
+                middle:spedcfic_pair.middle,
+                middle2:spedcfic_pair.middle2,
+                right:spedcfic_pair.right,
+                right2:spedcfic_pair.right2,
+                can_bet:spedcfic_pair.can_bet,
+                expired_time:spedcfic_pair.expired_time
+            },
+            result:which,
+            upload_time:timestamp::now_seconds(),
+            right_or_not:vector::empty<bool>()
+        };
+
+
+        vector::push_back(&mut specfic_helper.helper_contribute,new_upload_result);
+        // debug::print(&utf8(b"upload result"));
+        // debug::print(&specfic_helper.helper_contribute);
+        specfic_helper.upload_times = specfic_helper.upload_times + 1;
+
+    }
+
+    public entry fun apply_to_be_helper(caller:&signer) acquires Diffusion_store_tree, Account_tree {
+        let helper_index = check_helper_index(caller);
+        assert!(helper_index!=99,NOT_HELPER);
+        assert!(exists<Account_tree>(signer::address_of(caller)),Create_account_first);
+
+        // let helper_vector = borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed));
+        // let specfic_helper = vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list,helper_index);
+         if(vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list,helper_index).pay_margin == false){
+            pay_margin_to_account(caller);
+            vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list,helper_index).pay_margin=true;
+            let helper_badges = Badges{Name:utf8(b"Helper"),url:utf8(b"https://pot-124.4everland.store/helper_badges.png")};
+            vector::push_back(&mut borrow_global_mut<Account_tree>(signer::address_of(caller)).save_4,helper_badges);
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_helper_chance.heler_number = borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_helper_chance.heler_number+1;
+        }else{
+            assert!(vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list,helper_index).pay_margin != true,Already_pay_margin);
+        }
+
+
+    }
+
+
+    public entry fun mint_badges(caller:&signer,badges:string::String) acquires Diffusion_store_tree, Account_tree {
+        let i= 0;
+        let length =vector::length(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list);
+        let index =99;
+        while(i < length ){
+            let specfic = vector::borrow(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,i);
+            if(specfic.save_Badges.Name ==badges){
+                index = i;
+            };
+            i=i+1;
+        };
+        assert!(index != 99 ,Dont_have_this_badges);
+        if (vector::borrow(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_can_mint == true){
+            let e = 0 ;
+            let length3 = vector::length(&vector::borrow(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_allow_list);
+            while(e < length3 ) {
+                let specfi_borrow = vector::borrow(
+                    &vector::borrow(
+                        &borrow_global_mut<Diffusion_store_tree>(
+                            create_resource_address(&@dapp, Seed)
+                        ).save_badges_list,
+                        index
+                    ).save_allow_list,
+                    e
+                );
+                if (specfi_borrow == &signer::address_of(caller)) {
+                    let f = 0 ;
+                    let length2 = vector::length(&borrow_global<Account_tree>(signer::address_of(caller)).save_4);
+                    let where = 99;
+                    while(f < length2){
+                        let specfic = vector::borrow(&borrow_global<Account_tree>(signer::address_of(caller)).save_4,f);
+                        if(specfic.Name == badges){
+                            where = f;
+                        };
+                        f=f +1;
+                    };
+                    assert!(where == 99 ,Already_exists_this_badges);
+                    let new_badges = Badges{
+                        Name:vector::borrow(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_Badges.Name,
+                        url:vector::borrow(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_Badges.url,
+                    };
+                    push_back(&mut borrow_global_mut<Account_tree>(signer::address_of(caller)).save_4,new_badges);
+                    vector::push_back(&mut vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_list , signer::address_of(caller));
+                };
+                e = e + 1;
+            }
+        }else{
+            let f = 0 ;
+            let length2 = vector::length(&borrow_global<Account_tree>(signer::address_of(caller)).save_4);
+            let where = 99;
+            while(f < length2){
+                let specfic = vector::borrow(&borrow_global<Account_tree>(signer::address_of(caller)).save_4,f);
+                if(specfic.Name == badges){
+                    where = f;
+                };
+                f=f +1;
+            };
+            assert!(where == 99 ,Already_exists_this_badges);
+            let new_badges = Badges{
+                Name:vector::borrow(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_Badges.Name,
+                url:vector::borrow(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_Badges.url,
+            };
+            push_back(&mut borrow_global_mut<Account_tree>(signer::address_of(caller)).save_4,new_badges);
+            vector::push_back(&mut vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_list , signer::address_of(caller));
+        }
+    }
+    ////////////////// Helper fun /////////////////////////////////
+
+```
+
+寫一下helper會用到的function
+
 <!-- Content_END -->
