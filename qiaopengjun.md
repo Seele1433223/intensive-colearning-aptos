@@ -862,7 +862,14 @@ Customizing how the Object will behave using permissions called Refs.
 
 ### 2024.09.19
 
-笔记内容
+entry 方法调用者是 钱包地址 也是 signer
+合约在发布的时候内部去调用的， 它只能自己去初始化，不能被外部调用， init_mode signer 是合约
+Move.toml 是 Move 项目中的配置文件，负责管理依赖项和地址。对于像 @contract 和 @user 这样的命名地址，你需要在 Move.toml 文件中通过 [addresses] 或 [dev-addresses] 部分指定一个实际的值。否则，Move 编译器将无法解析这些地址，导致编译失败。
+
+当你在代码中使用像 @contract 或 @user 这样的命名地址时，这些地址必须在 Move.toml 文件中通过 [addresses] 声明一个实际的地址值。原因如下：
+
+ 1. 命名地址的解析：Move 语言允许你使用命名地址（如 @contract）来提高代码的可读性和可移植性。这些命名地址并不直接对应链上的某个具体地址，它们只是占位符。你需要在 Move.toml 文件中将这些命名地址映射到具体的链上地址。
+ 2. 编译器要求：Move 编译器需要知道所有命名地址的实际值才能正常编译代码。Move.toml 文件的 [addresses] 部分用于声明这些地址的实际值，或者在开发模式下，使用 [dev-addresses] 来生成临时的开发地址。
 
 ### 2024.09.20
 
