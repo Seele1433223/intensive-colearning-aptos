@@ -70,9 +70,9 @@ Write one more email to request license as last try;
 
 IntelliJ IDEA Ultimate: Request for Open Source Development License has been declined again;
 
-下载并安装 IntelliJ IDEA Community Edition;
+在 Windows 系统内，下载并安装 IntelliJ IDEA Community Edition;
 
-在 IntelliJ IDEA 内安装 Move on Aptos 插件;
+在 IntelliJ IDEA 内，安装 Move on Aptos 插件;
 
 ### 2024.09.15
 
@@ -89,5 +89,13 @@ Learn Ethereum to Aptos Workshop （Continued）
 ### 2024.09.18
 
 参加线上会议 ~ Aptos 残酷共学分享 3：构建并部署代币水龙头。
+
+https://explorer.aptoslabs.com/account/0xb2e094120b6d8fada08ac3b63918454287fd7c498773bde2e3e41a65ef1962c2/modules/code/faucet/faucet?network=testnet
+
+https://explorer.aptoslabs.com/account/0x9441c7b026a4029d7971ed4d7d9ed08ceaa09a17f3e004d6462a04eac9af457b/modules/code/faucet?network=testnet
+
+### 2024.09.19
+
+在 Windows 系统内，下载并安装 RustRover。
 
 <!-- Content_END -->
