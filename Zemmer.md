@@ -638,6 +638,64 @@ if (@0x789 == some_var) {...}
 ### 2024.09.17
 中秋节快乐
 ### 2024.09.18
+## 地址相关操作
+
+### 创建新地址
+
+1、创建一个指定的新地址
+
+生成特定前缀的账户（部署人用于部署合约的账户，因为aptos里没有contract address的概念）
+
+--vanity-prefix参数是自定义的账户名的前缀，在这里值是--vanity-prefix
+
+--output-file是自定义的生成的保存账户地址的文件，在这里值是ace.key
+
+```zsh
+aptos key generate --vanity-prefix 0xace --output-file ace.key
+```
+
+结果
+
+```json
+{
+  "Result": {
+    "Account Address:": "0xacef1b9b7d4ab208b99fed60746d18dcd74865edb7eb3c3f1428233988e4ba46",
+    "PublicKey Path": "ace.key.pub",
+    "PrivateKey Path": "ace.key"
+  }
+}
+```
+
+### 
+
+### 地址上链
+
+命令：
+
+```
+aptos account create --account 地址
+```
+
+
+
+```json
+{
+  "Result": {
+    "transaction_hash": "0x4321d286cfc12ee405dfa09ed50375403bf1d180c2d564af3ae0fcbdaf0d9e90",
+    "gas_used": 1069,
+    "gas_unit_price": 100,
+    "sender": "2f49d65a6520b3d13e989fc028d8395eadb9281d8053c1ed6007f3a47b4d4189",
+    "sequence_number": 1,
+    "success": true,
+    "timestamp_us": 1726214222997777,
+    "version": 64214470,
+    "vm_status": "Executed successfully"
+  }
+}
+
+```
+
+
 ### 2024.09.19
 ### 2024.09.20
 

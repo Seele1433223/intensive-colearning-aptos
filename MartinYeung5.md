@@ -402,5 +402,87 @@ Aptos 區塊鏈使用拜占庭容錯（Byzantine Fault Tolerance, BFT）共識�
 他們能夠從其他具相同性質的節點接收交易，並且可以在本地重新執行相關數據（與驗證者節點執行交易的方式相同）。
 完整節點會將重新執行交易的結果儲存到本地儲存位置。在整個過程中，他們可以隨時挑戰驗證者的任何犯規行為，及針對是否曾經試圖重寫或修改區塊鏈歷史紀錄的情況提供證據。這有助減輕驗證者節點的腐敗及(或)共謀作惡。
 
+### 2024.09.18
+#### 驗證節點的組成
+* Mempool:
+Mempool保存了已提交到區塊鏈但尚未達成一致或執行的交易在記憶體緩衝區的一個元件。
+在這個緩衝區能夠在驗節點和完整節點之間複製。
+
+在完整節點的JSON-RPC服務會將交易傳送到驗證節點的mempool。
+然後Mempool對交易進行不同檢查，以確保交易的有效性及防止DOS攻擊。
+當新交易通過初始驗證並添加到mempool時，它會即時被分發到網路中其他驗證節點的mempool。
+
+當驗證節點暫時成為共識協議中的領導者時，共識會從mempool中提取一組交易，然後提出一個新的交易區塊。
+之後該區塊會被傳送給其他驗證者，並包含該區塊中所有交易的總次序。
+然後每個驗證者執行該區塊及對會否接受新的區塊所提出的提案進行投票。
+
+* 共識(consensus):
+共識是負責對交易區塊進行排序並透過與網路中的其他驗證器節點參與共識協議來就執行結果達成一致的元件。
+
+* 執行 (execution)
+執行是協調交易區塊的執行及維持短暫狀態的元件。共識投票會在短暫狀態進行，執行會在記憶體請求中維持一個執行結果，
+直到達成共識及將該區塊提交到分布式資料庫為止。
+執行使用虛擬機器來執行交易。執行的部分會充當系統輸入(以交易形式表示)、儲存(提供持久層)和虛擬機器(用於執行)之間的glue layer。
+
+* 虛擬機器（Virtual machine）
+用於執行每個交易內的Move程式及確定執行結果。節點的mempool使用虛擬機器對交易進行驗證檢查，
+而執行會使用虛擬機器來執行交易。
+
+* 儲存 (storage)
+儲存元件用於將已確定的交易區塊及其執行結果持續地存在到本機數據庫。
+
+* 狀態同步裝置(State synchronizer)
+節點利用其狀態同步裝置元件來「趕上」區塊鏈的最新狀態和維持最新狀態。
+
+### 2024.09.19
+昨天參與了共學的線上活動，了解到Aptos的代幣標準，及合約相關的編寫。
+
+```
+module my_addr::fungible_asset_example {
+    use aptos_framework::fungible_asset::{Self, MintRef, TransferRef, BurnRef, Metadata, FungibleAsset};
+    use aptos_framework::object::{Self, Object};
+    use aptos_framework::primary_fungible_store;
+    use std::error;
+    use std::signer;
+    use std::string::utf8;
+    use std::option;
+  
+  const ASSET_SYMBOL: vector<u8> = b"FA";
+ 
+	// Make sure the `signer` you pass in is an address you own.
+	// Otherwise you will lose access to the Fungible Asset after creation.
+  entry fun init_module(admin: &signer) {
+    // Creates a non-deletable object with a named address based on our ASSET_SYMBOL
+    let constructor_ref = &object::create_named_object(admin, ASSET_SYMBOL);
+    
+    // Create the FA's Metadata with your name, symbol, icon, etc.
+    primary_fungible_store::create_primary_store_enabled_fungible_asset(
+        constructor_ref,
+        option::none(),
+        utf8(b"FA Coin"), /* name */
+        utf8(ASSET_SYMBOL), /* symbol */
+        8, /* decimals */
+        utf8(b"http://example.com/favicon.ico"), /* icon */
+        utf8(b"http://example.com"), /* project */
+    );
+    
+    // Generate the MintRef for this object
+    // Used by fungible_asset::mint() and fungible_asset::mint_to()
+		let mint_ref = fungible_asset::generate_mint_ref(&constructor_ref)
+		
+    // Generate the TransferRef for this object
+    // Used by fungible_asset::set_frozen_flag(), fungible_asset::withdraw_with_ref(),  
+    // fungible_asset::deposit_with_ref(), and fungible_asset::transfer_with_ref().
+		let transfer_ref = fungible_asset::generate_transfer_ref(&constructor_ref)
+		
+    // Generate the BurnRef for this object
+    // Used by fungible_asset::burn() and fungible_asset::burn_from()
+		let burn_ref = fungible_asset::generate_burn_ref(&constructor_ref)
+    
+    // Add any other logic required for your use case.
+    // ...
+  }
+}
+```
 
 <!-- Content_END -->
