@@ -64,5 +64,8 @@ aptos move init --name cofirst
 ### 2024.09.19
 用户、房间、排行榜、实际编码设计阶段预计合约部分3天左右。
 
+### 2024.09.20
+持续推进，持续building。。。
+
 
 <!-- Content_END -->
