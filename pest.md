@@ -88,4 +88,10 @@ timezone: Asia/Shanghai
 
 [Source Code](https://github.com/jeffierw/aptos_todolist)
 
+### 2024.09.19
+
+* 学习Aptos Todo List Example中的端到端测试用例；
+
+[Source Code](https://github.com/jeffierw/aptos_todolist)
+
 <!-- Content_END -->

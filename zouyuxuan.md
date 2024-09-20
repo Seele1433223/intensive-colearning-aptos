@@ -165,4 +165,10 @@ event::emit(TransferEvent { sender: address,
     amount: 1}
     );
 ```
+
+### 2024.09.19
+学习aptos-move例子
+### 2024.09.20
+### 2024.09.21
+### 2024.09.22
 <!-- Content_END -->

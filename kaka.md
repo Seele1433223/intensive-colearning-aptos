@@ -384,6 +384,16 @@ aptos move compile-script  // 合约中只有一个script时
 aptos move run-script --compiled-script-path build/run_script/bytecode_scripts/main.mv --args address:b078d693856a65401d492f99ca0d6a29a0c5c0e371bc2521570a86e40d95f823 --args u64:5
 ```
 
+### 2024.09.19
+**学习内容**：学习使用indexer查询数据<br>
+**学习记录**：<br>
+indexer跟踪链上发生的每笔交易，然后通过GraphQL API公开该交易。任何人都可以使用它来获取有关交易、可替代资产和链上代币的基本历史数据和汇总数据。
 
+可以通过Hasura Explorer很方便地进行执行操作。
 
+GraphQL API：
+
+- **Mainnet:** `https://api.mainnet.aptoslabs.com/v1/graphql`
+- **Testnet:** `https://api.testnet.aptoslabs.com/v1/graphql`
+- **Devnet:** `https://api.devnet.aptoslabs.com/v1/graphql`
 <!-- Content_END -->
