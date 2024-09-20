@@ -465,6 +465,13 @@ module marketplace_addr::test_marketplace {
 
 ### 2024.09.20
 
+1. Aptos keyless
+  Aptos Keyless 允许用户从现有的 OpenID Connect (OIDC) 帐户（例如，使用 Google 登录；使用 Apple 登录）获得 Aptos 区块链帐户的所有权，而不是通过传统的密钥或助记词。
+  Aptos Keyless 预期的安全模型是“区块链账户=谷歌账户”。如果谷歌账户存在风险，则区块链账户也等同。
+
 ### 2024.09.21
 
+### 2024.09.22
+
+### 2024.09.23
 <!-- Content_END -->
