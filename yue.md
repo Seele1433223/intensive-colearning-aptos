@@ -1231,4 +1231,237 @@ module 0x1::demo {
 
 寫一下helper會用到的function
 
+### 2024.09.20
+```move
+////////////////// Admin fun /////////////////////////////////
+
+    public entry fun admin_set_badges(caller:&signer,job:string::String,badges:string::String,target:address,set_can_mint:bool) acquires Diffusion_store_tree {
+        let admin_index = check_admin_index(signer::address_of(caller));
+        assert!(admin_index !=99 ||signer::address_of(caller)==@admin1 || signer::address_of(caller)==@admin1,Not_admin);
+        let i= 0;
+        let length =vector::length(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list);
+        let index =99;
+        while(i < length ){
+            let specfic = vector::borrow(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,i);
+            if(specfic.save_Badges.Name ==badges){
+                index = i;
+            };
+            i=i+1;
+        };
+        assert!(index != 99 ,Dont_have_this_badges);
+        if(job == utf8(b"add")){
+            vector::push_back(&mut vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_allow_list,target);
+        }
+        else if(job == utf8(b"minus")){
+            let f =0;
+            let length2 = vector::length(&vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_allow_list);
+            let where =99;
+            while(f < length2 ){
+                let borrow = vector::borrow(&vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_allow_list,f);
+                if(borrow == &target){
+                    where = f;
+                };
+                f= f+1;
+            };
+            assert!(f != 99 ,Dont_have_this_address_in_allow_list);
+            vector::remove(&mut vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_allow_list,where);
+        }
+        else if(job == utf8(b"set")){
+            vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,index).save_can_mint = set_can_mint;
+        }
+
+    }
+    fun check_admin_index(target:address):u64 acquires Diffusion_store_tree {
+        let i = 0;
+        let length =vector::length(& borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.admin_list);
+        while(i < length){
+            let borrow = vector::borrow(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.admin_list,i);
+            if(&target == borrow){
+                return i
+            };
+            i=i+1;
+        } ;
+        return 99
+    }
+    public entry fun admin_set_admin (caller:&signer,add_or_delete:string::String,target_address:address) acquires Diffusion_store_tree {
+        assert!(signer::address_of(caller)==@admin1 || signer::address_of(caller)==@admin1,Not_lages_admin);
+        assert!(exists<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)) == true,Not_exists_diffusion_store_tree);
+        let admin_index = check_admin_index(target_address);
+
+        if(add_or_delete == utf8(b"add")){
+            assert!(admin_index ==99 ,Already_have_this_admin);
+            vector::push_back(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.admin_list,target_address);
+        }else if(add_or_delete == utf8(b"delete")){
+            assert!(admin_index !=99,Dont_have_this_admin );
+            vector::remove(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.admin_list,admin_index);
+        }
+    }
+    public entry fun admin_said_times_up(caller:&signer,pair:string::String,expired_time:u64) acquires Diffusion_store_tree {
+        let admin_index = check_admin_index(signer::address_of(caller));
+        assert!(admin_index !=99 || signer::address_of(caller)==@admin1 || signer::address_of(caller)==@admin1,Not_admin);
+        let index = check_pair_index(caller,pair,expired_time);
+        assert!(index != 99 ,NOT_exist_pair);
+        vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Pair_result_store.save_pair,index).can_bet = false ;
+    }
+    public entry fun create_or_delete_badges (caller:&signer,create_or_delete:string::String,badges:string::String,url1:string::String,can_mint:bool) acquires Diffusion_store_tree {
+        assert!(signer::address_of(caller)==@admin1 || signer::address_of(caller)==@admin1,Not_admin);
+        let i= 0;
+        let length =vector::length(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list);
+        let index =99;
+        while(i < length ){
+            let specfic = vector::borrow(&borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,i);
+            if(specfic.save_Badges.Name ==badges){
+                index = i;
+            };
+            i=i+1;
+        };
+
+        if(create_or_delete == utf8(b"create")){
+            assert!(index == 99 ,Already_exists_this_badges);
+            let new_badges=Badges_list{
+                save_Badges:Badges{Name:badges,url:url1},
+                save_can_mint:can_mint,
+                save_allow_list:vector::empty(),
+                save_list:vector::empty(),
+            };
+            push_back(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_badges_list,new_badges);
+        }
+        else if(create_or_delete == utf8(b"delete")){
+            if(length != 0) {
+                assert!(index != 99, Dont_have_this_badges);
+                vector::remove<Badges_list>(
+                    &mut borrow_global_mut<Diffusion_store_tree>(
+                        create_resource_address(&@dapp, Seed)
+                    ).save_badges_list,
+                    index
+                );
+            }
+        }
+    }
+    public entry fun set_chance(caller:&signer,which_one:string::String,fee1:u64,fee2:u64) acquires Diffusion_store_tree {
+        assert!(signer::address_of(caller)==@admin1 || signer::address_of(caller)==@admin2 ,Not_admin);
+        assert!(exists<Diffusion_store_tree>(create_resource_address(&@dapp,Seed))==true,Not_exists_diffusion_store_tree);
+        if(which_one==utf8(b"margin")){
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).fee.margin=fee1;
+        }else if(which_one==utf8(b"fee")){
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).fee.fees_1=fee1;
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).fee.fees_2=fee2;
+        }else if(which_one==utf8(b"share")){
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).fee.allocation_share_1=fee1;
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).fee.allocation_share_2=fee2;
+        }else if(which_one==utf8(b"max helper")){
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_helper_chance.maximun_helper_num=fee1;
+        }else if(which_one==utf8(b"least helper")){
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_helper_chance.least_helper_result= (fee1 as u8);
+        }else if(which_one==utf8(b"wrong")){
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_helper_chance.chance_for_wrong_time= (fee1 as u8);
+
+        }else if(which_one==utf8(b"nft chance")){
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).fee.nft_chance_1 = fee1 ;
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).fee.nft_chance_2 = fee2 ;
+        }else if(which_one==utf8(b"bank share")){
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).fee.bank_share_1 = fee1 ;
+            borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).fee.bank_share_2 = fee2 ;
+        };
+    }
+    public entry fun set_cylinder_sav_number(caller:&signer,save_number:u64,coin1:string::String,coin_address1:address,send_coin_amount1:u64) acquires Diffusion_store_tree {
+        assert!(signer::address_of(caller) == @admin1 ||signer::address_of(caller) == @admin2 ,Not_admin  );
+        assert!(save_number > 1 ,Save_number_must_large_than_1 );
+        let index = find_coin_index_in_main_tree(coin1,coin_address1,send_coin_amount1);
+        assert!(index != 99 ,Dont_have_this_cylinder);
+        vector::borrow_mut(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Cylinder_Pairs,index).save_number = save_number;
+    }
+    public entry fun create_cylinder(caller:&signer,coin1:string::String,coin_address1:address,send_coin_amount1:u64) acquires Diffusion_store_tree {
+        let admin_index = check_admin_index(signer::address_of(caller));
+        assert!(admin_index != 99 ||signer::address_of(caller) == @admin1 ||signer::address_of(caller) == @admin2 ,Not_admin  );
+        let index = find_coin_index_in_main_tree(coin1,coin_address1,send_coin_amount1);
+        assert!(index == 99 ,Already_have_this_cylinder);
+        let new_cylinder = Cylinder_Pairs{
+            coin:coin1,
+            coin_address:coin_address1,
+            pair_number:send_coin_amount1,
+            save_number:1,
+            save_total:0,
+            send_amount_vector:vector::empty<u64>(),
+            send_address_vector:vector::empty<address>(),
+            already_send:0
+        };
+        // vector::push_back(&mut new_cylinder.send_address_vector,@admin1);
+        // vector::push_back(&mut new_cylinder.send_amount_vector,1);
+        vector::push_back(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Cylinder_Pairs,new_cylinder);
+    }
+    public entry fun create_helper(caller:&signer,add_or_delete:string::String,helper_adddress:address) acquires Diffusion_store_tree {
+        assert!(signer::address_of(caller)==@admin1 || signer::address_of(caller)==@admin2 ,Not_admin);
+        if(add_or_delete == utf8(b"add")) {
+            assert!(
+                (vector::length(
+                    &borrow_global_mut<Diffusion_store_tree>(
+                        create_resource_address(&@dapp, Seed)
+                    ).save_Helper_list.list
+                ) < borrow_global_mut<Diffusion_store_tree>(
+                    create_resource_address(&@dapp, Seed)
+                ).save_helper_chance.maximun_helper_num),
+                Too_Much_Helper
+            );
+            let borrow_helper_list = borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp, Seed));
+            let length = vector::length(&borrow_helper_list.save_Helper_list.list);
+            let i = 0;
+            let done = false;
+            if (length == 0) {
+                let new_helper = Helper {
+                    account: helper_adddress,
+                    helper_contribute: vector::empty<Helper_upload_result>(),
+                    helper_point: 0,
+                    upload_times: 0,
+                    wrong_times: 0,
+                    pay_margin: false,
+                    need_admin: false
+                };
+                vector::push_back(&mut borrow_helper_list.save_Helper_list.list, new_helper);
+            }else {
+                while (i < length) {
+                    let borrow = vector::borrow(&borrow_helper_list.save_Helper_list.list, i);
+                    if (borrow.account == helper_adddress) {
+                        return
+                    };
+                    if (i == length - 1) {
+                        done = true
+                    };
+                    i = i + 1;
+                };
+
+                if (done == true) {
+                    let new_helper = Helper {
+                        account: helper_adddress,
+                        helper_contribute: vector::empty<Helper_upload_result>(),
+                        helper_point: 0,
+                        upload_times: 0,
+                        wrong_times: 0,
+                        pay_margin: false,
+                        need_admin: false
+                    };
+                    vector::push_back(&mut borrow_helper_list.save_Helper_list.list, new_helper);
+                };
+            };
+        }else if(add_or_delete == utf8(b"delete")){
+            let i =0;
+            let length = vector::length(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list);
+            let index= 99;
+            while(i < length){
+                let specfic = vector::borrow(&borrow_global<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list,i);
+                if(specfic.account ==helper_adddress){
+                    index = i;
+                };
+                i=i+1;
+            };
+            assert!(index != 99 , Dont_have_this_helper);
+            vector::remove(&mut borrow_global_mut<Diffusion_store_tree>(create_resource_address(&@dapp,Seed)).save_Helper_list.list,index);
+        }
+        // let helper_index = check_helper_index(caller);
+        // assert!(helper_index!=99,NOT_HELPER);
+    }
+
+    ////////////////// Admin fun /////////////////////////////////
+```
+寫admin會用到的function
 <!-- Content_END -->
