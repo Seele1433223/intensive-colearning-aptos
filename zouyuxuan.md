@@ -169,6 +169,18 @@ event::emit(TransferEvent { sender: address,
 ### 2024.09.19
 学习aptos-move例子
 ### 2024.09.20
+学习aptos-move 中bonding_curve_launchpad例子
+合约初始化函数使用
+```
+init_module函数必须是私有的，不能返回任何参数
+
+ fun init_module(account: &signer) {
+        let signer_extender = object::generate_extend_ref(
+            &object::create_sticky_object(@bonding_curve_launchpad)
+        );
+        move_to(account, Pairs { signer_extender });
+    }
+```
 ### 2024.09.21
 ### 2024.09.22
 <!-- Content_END -->
