@@ -396,4 +396,11 @@ GraphQL API：
 - **Mainnet:** `https://api.mainnet.aptoslabs.com/v1/graphql`
 - **Testnet:** `https://api.testnet.aptoslabs.com/v1/graphql`
 - **Devnet:** `https://api.devnet.aptoslabs.com/v1/graphql`
+
+### 2024.09.20
+**学习内容**：学习Aptos keyless<br>
+**学习记录**：<br>
+Aptos Keyless 允许用户从现有的 OpenID Connect (OIDC) 帐户（例如，使用 Google 登录；使用 Apple 登录）获得 Aptos 区块链帐户的所有权，而不是通过传统的密钥或助记词。<br>
+Aptos Keyless 预期的安全模型是“区块链账户=谷歌账户”。如果谷歌账户存在风险，则区块链账户也等同。
+
 <!-- Content_END -->
