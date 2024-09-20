@@ -180,4 +180,21 @@ async transferCoin(sender: AptosAccount, receiverAddress: HexString, amount: num
     return pendingTxn.hash;
   }
   
+### 2024.09.20
+Global Storage
+move_to<T>(&signer, T)
+move_from<T>(address): T
+borrow_global_mut<T>(address): &mut T
+borrow_global<T>(address): &T
+exists<T>(address): bool
+
+T要求有key的能力
+
+Global Storage返回的ref不能作为函数的参数返回
+
+acquires 要求类型
+m::f 要求 acquires T 
+1. m::f 包含 move_from<T> borrow_globnal_mut<T> borrow_global<T>
+2. m::f 调用的 m::g 在同一个模块中acquires T
+
 <!-- Content_END -->
