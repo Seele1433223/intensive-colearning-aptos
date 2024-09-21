@@ -700,6 +700,7 @@ aptos account create --account 地址
 ### 2024.09.20
 
 ### 2024.09.21
+vector的语法深入学习
 
 ### 2024.09.22
 

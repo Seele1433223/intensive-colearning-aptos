@@ -64,5 +64,12 @@ aptos move init --name cofirst
 ### 2024.09.19
 用户、房间、排行榜、实际编码设计阶段预计合约部分3天左右。
 
+### 2024.09.20
+持续推进，持续building。。。
+
+### 2024.09.21
+听闻有了中文页面，阅读起来舒服多了，以前英文的也不是不能看，就是费眼。。。
+https://aptos.dev/zh/build/apis
+持续推进ing
 
 <!-- Content_END -->

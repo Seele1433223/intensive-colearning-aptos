@@ -103,4 +103,18 @@ Bob's updated MoonCoin balance: 100.
 
 尝试写自己的 FA 合约
 
+### 2024.09.19
+
+尝试写自己的 FA 合约,但是没有写出来，我觉得学不下了
+
+### 2024.09.20
+
+继续学习
+https://aptos.dev/en/build/smart-contracts/fungible-asset
+
+### 2024.09.21
+
+时间用得少，去干别的事情去，暂时只学一点点
+https://aptos.dev/en/build/smart-contracts/fungible-asset
+
 <!-- Content_END -->
