@@ -63,7 +63,7 @@ timezone: Asia/Shanghai
 3. 参加会议了解FA代币的水龙头以及创建代币基础流程
 
 ### 2024.09.20
-1. 改造重写todo-list合约代码练手
+1. 改造重写todo-list合约代码练手 -代码地址: https://explorer.aptoslabs.com/account/0xbb8b64e9533cfcda99f7eb5971a5b1dd4faf8a2e55bc94d535af780e799bd9fe/modules/code/copy_todo_list/get_todos?network=testnet
 2. 看move example的nft市场代码
 
 <!-- Content_END -->
