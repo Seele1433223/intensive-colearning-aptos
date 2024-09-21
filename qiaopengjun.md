@@ -972,7 +972,52 @@ module red_packet::red_packet {
 
 ### 2024.09.21
 
-笔记内容
+<https://www.youtube.com/watch?v=bny8hBEpBmw>
+Resource Group & Object Model
+
+Resource Group
+底层存储系统
+更优化的使用存储系统， 节省gas费
+ledger 完全二叉树  Transaction 叶子节点 Merkle Tree 共识
+tree 链  证明 缺点 中间节点
+区块的概念只存在于共识
+Transaction hash + 状态树 +  Event Tree = TransactionInfo
+key = Hash(Account address, Access path)
+Value = Serialized byte array
+resource_group module address global
+Only struct and fun can have attributes
+手动调整 Gas Cost
+
+Flow of Object Creation
+
+```rust
+// 1. Create ConstructorRef
+let object_cref: ConstructorRef = object::create_object(aaron_address);
+let object_signer = generate_signer(&object_cref);
+move_to(&object_signer, X {});
+```
+
+object convert
+有些 object 是不能被删除的
+Move
+类型系统
+
+- 将一个语言中所有能表达的值分类成一个个子集
+- 调用的时候就可以通过规定实现方只能接受哪种子集
+传统语言结构
+- 语言
+- 编译器
+- 执行码 LLVM jvm
+编译器完成类型检查
+- 静态检查保证类型正确
+- 运行时不再检查
+- 所以字节码不需要保留类型信息
+智能合约不同于传统程序
+- 合约调用方被调用方不一定由同一作者完成
+- 为什么 Solidity 中没有结构体呢？
+Move 不同于 Solidity
+- 字节码中保留了类型信息
+- 上链代码保证互相的类型安全
 
 ### 2024.09.22
 
