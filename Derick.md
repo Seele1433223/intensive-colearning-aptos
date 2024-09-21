@@ -204,7 +204,8 @@ Aptos中的FA (Fungible Asset)是一种可替代资产的实现,具有以下主�
 FA为Aptos提供了一个灵活、安全、标准化的可替代资产框架,使开发者能够轻松创建和管理各种类型的数字资产。
 
 ### 2024.09.19
- -  [ ] 
+ -  [x] 编写第一个aptos move合约
+ -  [ ] https://explorer.aptoslabs.com/txn/0xa19cedda225355eb4fa5cfc15c5c5d3bd00cd5fc7cdd43b667e44e16152ef471/userTxnOverview?network=testnet 
 ### 2024.09.20
  -  [ ] 
 ### 2024.09.21

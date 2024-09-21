@@ -264,4 +264,21 @@ RIPEMD160
 - ton mini app integration
 
 今天先完成合约再测试
+
+### 2024.09.20
+move compiler v2 features:
+1. method call:
+```move
+vector::push_back(&mut state.mf2, obj_add);
+```
+can be replaced with:
+```move
+state.mf2.push_back(obj_add);
+```
+to use compiler v2:
+```
+aptos move compile --move-2
+aptos move test --move-2
+aptos move prove --move-2
+```
 <!-- Content_END -->

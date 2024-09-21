@@ -117,4 +117,12 @@ timezone: Pacific/Auckland # 新西兰标准时间 (UTC+12)
 
 score 中的计分逻辑测试仍然存在 bug
 
+### 2024.09.20
+
+更新插入 `#` 的逻辑，bug 未被修复
+
+### 2024.09.21
+
+添加 aptos connect
+
 <!-- Content_END -->
