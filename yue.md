@@ -1464,4 +1464,11 @@ module 0x1::demo {
     ////////////////// Admin fun /////////////////////////////////
 ```
 寫admin會用到的function
+
+### 2024.09.21
+
+今天來學習 object 的用法和理解
+`https://www.youtube.com/watch?v=bny8hBEpBmw`
+
+```
 <!-- Content_END -->
