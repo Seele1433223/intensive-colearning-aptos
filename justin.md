@@ -197,4 +197,25 @@ m::f 要求 acquires T
 1. m::f 包含 move_from<T> borrow_globnal_mut<T> borrow_global<T>
 2. m::f 调用的 m::g 在同一个模块中acquires T
 
+### 2024.09.21
+const client = new AptosClient(NODE_URL);
+  const faucetClient = new FaucetClient(NODE_URL, FAUCET_URL);
+
+  // Generates key pair for a new account
+  const account1 = new AptosAccount();
+  await faucetClient.fundAccount(account1.address(), 100_000_000);
+  let resources = await client.getAccountResources(account1.address());
+  let accountResource = resources.find((r) => r.type === aptosCoinStore);
+  let balance = parseInt((accountResource?.data as any).coin.value);
+  assert(balance === 100_000_000);
+  console.log(`account1 coins: ${balance}. Should be 100000000!`);
+
+  const account2 = new AptosAccount();
+  // Creates the second account and fund the account with 0 AptosCoin
+  await faucetClient.fundAccount(account2.address(), 0);
+  resources = await client.getAccountResources(account2.address());
+  accountResource = resources.find((r) => r.type === aptosCoinStore);
+  balance = parseInt((accountResource?.data as any).coin.value);
+  assert(balance === 0);
+  
 <!-- Content_END -->
