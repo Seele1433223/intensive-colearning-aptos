@@ -94,4 +94,10 @@ timezone: Asia/Shanghai
 
 [Source Code](https://github.com/jeffierw/aptos_todolist)
 
+### 2024.09.20
+
+* 学习[Aptos TS-SDK](https://aptos.dev/en/build/sdks/ts-sdk/quickstart)和[Aptos Wallet Adapter](https://aptos.dev/en/build/sdks/wallet-adapter/dapp)的使用；
+
+[Source Code](https://github.com/jeffierw/aptos_todolist)
+
 <!-- Content_END -->

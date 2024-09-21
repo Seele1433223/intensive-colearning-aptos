@@ -62,4 +62,8 @@ timezone: Asia/Shanghai
 2. 弄懂项目部署流程,怎么通过init_module()函数初始化项目
 3. 参加会议了解FA代币的水龙头以及创建代币基础流程
 
+### 2024.09.20
+1. 改造重写todo-list合约代码练手
+2. 看move example的nft市场代码
+
 <!-- Content_END -->
