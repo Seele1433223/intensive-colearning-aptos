@@ -66,4 +66,7 @@ timezone: Asia/Shanghai
 1. 改造重写todo-list合约代码练手 -代码地址: https://explorer.aptoslabs.com/account/0xbb8b64e9533cfcda99f7eb5971a5b1dd4faf8a2e55bc94d535af780e799bd9fe/modules/code/copy_todo_list/get_todos?network=testnet
 2. 看move example的nft市场代码
 
+### 2024.09.21
+1. 继续看https://learn.aptoslabs.com/zh/code-examples/vesting-token aptos的官方demo,熟悉常见的合约以及功能实现
+
 <!-- Content_END -->

@@ -478,8 +478,44 @@ module marketplace_addr::test_marketplace {
 为了解决这个问题，区块链技术采用了一些特殊的方法来生成链上随机数。其中一种常见的方法是使用可验证随机函数（Verifiable Random Function，VRF）。VRF 是一种密码学函数，它可以生成可验证的随机数，并且保证随机数的生成过程是不可预测和不可操纵的。
 
 ### 2024.09.21
+1. Package是在一个帐户下作为原子单元发布的模块的集合
+```
+├── Move.toml      (required)
+├── sources\       (required, stores move modules)
+│   └── aptogotchi.move
+├── build\         (generated, build output)
+├── scripts\       (optional, stores move scripts)
+│   └── script_batch_create_gotchi.move
+├── doc_templates\ (optional)
+|── tests\         (optional, test mode)
+└── examples\      (optional, test & dev mode)
+```
+要升级已发布的 Move 代码，只需尝试在之前发布的同一地址重新发布代码。
+2.   Modules是定义结构类型和对这些类型进行操作的函数的库。它允许任何人读取当前的管理地址。
+3. 函数
+ - Public functions
+   ```
+   public fun get_aptogotchi(owner_addr: address) { }
+   ```
+    - View Functions
+   - ```
+     #[view]
+     public fun get_name(user_addr: address): String acquires AptoGotchi { }
+     ```
+    - Inline Functions
+     ```
+     inline fun get_aptogotchi_internal(creator_addr: &address) { }
+     ```
+- Private Functions私有函数是合约中没有public修饰符的函数。其他模块（合约）无法访问它。
+  ```
+  fun get_aptogotchi_address(creator_addr: &address): (address) { }
+  ```
+4. 结构
+   Struct 支持原始类型（ integer 、 bool 、 address 、 vector和signer ）和其他结构（Aptos 框架提供的结构，如table和用户定义的结构）。
+   <img width="715" alt="image" src="https://github.com/user-attachments/assets/4a678bf0-365f-4d58-9fa9-44460b79a4b0">
 
 ### 2024.09.22
+请假！
 
 ### 2024.09.23
 <!-- Content_END -->
