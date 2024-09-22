@@ -217,5 +217,8 @@ const client = new AptosClient(NODE_URL);
   accountResource = resources.find((r) => r.type === aptosCoinStore);
   balance = parseInt((accountResource?.data as any).coin.value);
   assert(balance === 0);
-  
+
+### 2024.09.22
+研究aptos前端动态发token
+
 <!-- Content_END -->
