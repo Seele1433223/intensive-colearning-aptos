@@ -102,4 +102,8 @@ https://explorer.aptoslabs.com/account/0x9441c7b026a4029d7971ed4d7d9ed08ceaa09a1
 
 了解 Aptos 公链的架构、共识机制，Gas 模型、帐户模型、资源模型、交易与状态模型
 
+### 2024.09.22
+
+了解 Aptos 公链的架构、共识机制，Gas 模型、帐户模型、资源模型、交易与状态模型（Continued）
+
 <!-- Content_END -->
