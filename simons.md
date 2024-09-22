@@ -125,4 +125,8 @@ score 中的计分逻辑测试仍然存在 bug
 
 添加 aptos connect
 
+### 2024.09.22
+
+修正 aptos connect
+
 <!-- Content_END -->
