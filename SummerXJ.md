@@ -72,4 +72,8 @@ aptos move init --name cofirst
 https://aptos.dev/zh/build/apis
 持续推进ing
 
+### 2024.09.22
+研读新版本V2，真棒！！！赞一个
+https://movetofuns.dev/aptos101/movev2/
+
 <!-- Content_END -->
