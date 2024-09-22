@@ -98,4 +98,8 @@ https://explorer.aptoslabs.com/account/0x9441c7b026a4029d7971ed4d7d9ed08ceaa09a1
 
 在 Windows 系统内，下载并安装 RustRover。
 
+### 2024.09.21
+
+了解 Aptos 公链的架构、共识机制，Gas 模型、帐户模型、资源模型、交易与状态模型
+
 <!-- Content_END -->
